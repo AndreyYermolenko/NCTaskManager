@@ -12,6 +12,9 @@ public class Task {
     private boolean repeat;
 
     public Task(String title, int time) {
+        if (time < 0) {
+            throw new IllegalArgumentException("Время должно быть положительным числом!");
+        }
         this.title = title;
         this.time = time;
         this.repeat = false;
@@ -19,6 +22,9 @@ public class Task {
     }
 
     public Task(String title, int start, int end, int interval) {
+        if (start < 0 || end <= start || interval <= 0) {
+            throw new IllegalArgumentException("Ошибка при установке времени!");
+        }
         this.title = title;
         this.start = start;
         this.end = end;
@@ -27,29 +33,29 @@ public class Task {
         this.active = false;
     }
 
-    /**Метод возвращает название задачи.*/
+    /*Метод возвращает название задачи.*/
     public String getTitle() {
         return this.title;
     }
 
-    /**Метод изменяет название задачи.*/
+    /*Метод изменяет название задачи.*/
     public void setTitle(String title) {
         this.title = title;
     }
 
-    /**Метод считывает текущее состояние
+    /*Метод считывает текущее состояние
      * задачи. Если задача активна возвра-
      * щает true.*/
     public boolean isActive() {
         return this.active;
     }
 
-    /**Метод изменяет состояние задачи.*/
+    /*Метод изменяет состояние задачи.*/
     public void setActive(boolean active) {
         this.active = active;
     }
 
-    /**Метод возвращает время выполнения
+    /*Метод возвращает время выполнения
      * задачи. В случае, если задача
      * повторяется -- возвращает
      * время начала повторения.*/
@@ -61,17 +67,20 @@ public class Task {
         }
     }
 
-    /**Метод устанавливает время выполнения
+    /*Метод устанавливает время выполнения
      * задачи. Если задача повторяется
      * (регулярная), то преобразует её в
      * такую, что не повторяется
      * (одноразовую).*/
     public void setTime(int time) {
+        if (time < 0) {
+            throw new IllegalArgumentException("Время должно быть положительным числом!");
+        }
         this.time = time;
         this.repeat = false;
     }
 
-    /**Метод возвращает время начала
+    /*Метод возвращает время начала
      * повторения задачи. Если
      * задача не повторяется,
      * то возвращает время выполнения
@@ -84,7 +93,7 @@ public class Task {
         }
     }
 
-    /**Метод возвращает время прекращения
+    /*Метод возвращает время прекращения
      * повторения задачи.
      * Если задача не повторяется,
      * то возвращает время выполнения
@@ -97,7 +106,7 @@ public class Task {
         }
     }
 
-    /**Метод возвращает временной интервал
+    /*Метод возвращает временной интервал
      * между выполнениями задачи,
      * что повторяется.
      * Если задача не повторяется,
@@ -110,13 +119,16 @@ public class Task {
         }
     }
 
-    /**Метод устанавливает время
+    /*Метод устанавливает время
      * начала и окончания выполнения
      * повторяемой задачи и интервал
      * между повторениями. Если задача
      * не повторяется, делает её
      * повторяющейся.*/
     public void setTime(int start, int end, int interval) {
+        if (start < 0 || end <= start || interval <= 0) {
+            throw new IllegalArgumentException("Ошибка при установке времени!");
+        }
         this.start = start;
         this.end = end;
         this.interval = interval;
@@ -125,13 +137,13 @@ public class Task {
         }
     }
 
-    /**Метод возвращает true, если
+    /*Метод возвращает true, если
      * задача повторяется.*/
     public boolean isRepeated() {
         return this.repeat;
     }
 
-    /**1) Проверяет активность задачи.
+    /*1) Проверяет активность задачи.
      * Если false, возвращает -1.
      *
      * 2) Проверяет регулярность задачи.
@@ -161,6 +173,9 @@ public class Task {
      * 5) Если ни одно из условий
      * не выполняется, то возвращает -1.*/
     public int nextTimeAfter(int current) {
+        if (current < 0) {
+            throw new IllegalArgumentException("Время должно быть положительным числом!");
+        }
         if (!isActive()) {
             return -1;
         }
@@ -196,5 +211,10 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), getTime(), start, end, interval, isActive(), repeat);
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }
