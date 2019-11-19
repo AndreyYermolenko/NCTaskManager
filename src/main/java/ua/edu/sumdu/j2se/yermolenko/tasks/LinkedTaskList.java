@@ -1,8 +1,9 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks;
 
-import java.util.Objects;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList {
     private int size = 0;
     private Node<Task> first;
     private Node<Task> last;
@@ -17,6 +18,11 @@ public class LinkedTaskList {
             this.next = next;
             this.prev = prev;
         }
+    }
+
+    @Override
+    public AbstractTaskList createList() {
+        return new LinkedTaskList();
     }
 
     public void add(Task task) {
@@ -112,6 +118,13 @@ public class LinkedTaskList {
             throw new IndexOutOfBoundsException();
         }
 
+        if (index <= size/2) {
+            return getTaskFromBegin(index);
+        } else {
+            return getTaskFromEnd(index);
+        }
+    }
+    private Task getTaskFromBegin(int index){
         Node<Task> temp = first;
         int number = 0;
         while (number < index) {
@@ -120,19 +133,14 @@ public class LinkedTaskList {
         }
         return temp.item;
     }
-
-    public LinkedTaskList incoming(int from, int to) {
-        LinkedTaskList cutList = new LinkedTaskList();
-        Node<Task> temp = first;
-        while (temp != null) {
-            Task task = temp.item;
-            int incoming = task.nextTimeAfter(from);
-            if (incoming < to && incoming != -1) {
-                cutList.add(task);
-            }
-            temp = temp.next;
+    private Task getTaskFromEnd(int index){
+        Node<Task> temp = last;
+        int number = size - 1;
+        while (number > index) {
+            temp = temp.prev;
+            number--;
         }
-        return cutList;
+        return temp.item;
     }
 
     @Override
@@ -142,10 +150,10 @@ public class LinkedTaskList {
         LinkedTaskList that = (LinkedTaskList) o;
 
         if (size == that.size) {
-            for (int i = 0; i < size; i++) {
-                Task task1 = this.getTask(i);
-                Task task2 = that.getTask(i);
-                if (!task1.equals(task2)) {
+            Iterator<Task> iterator1 = this.iterator();
+            Iterator<Task> iterator2 = that.iterator();
+            while (iterator1.hasNext()) {
+                if (!iterator1.next().equals(iterator2.next())) {
                     return false;
                 }
             }
@@ -157,8 +165,58 @@ public class LinkedTaskList {
 
     @Override
     public int hashCode() {
-//        int firstItemTime = first.item.getTime();
-//        int lastItemTime = last.item.getTime();
-        return 31* size;//*firstItemTime*lastItemTime;
+        int firstItemTime = first.item.getTime();
+        int lastItemTime = last.item.getTime();
+        return 31* size*firstItemTime*lastItemTime;
+    }
+
+    @Override
+    public LinkedTaskList clone() {
+        LinkedTaskList list = new LinkedTaskList();
+        Iterator<Task> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            list.add(iterator.next().clone());
+        }
+        return list;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new IteratorLinkedList(this, first);
+    }
+
+    private class IteratorLinkedList implements Iterator<Task> {
+        private Node node;
+        private Task currentTask;
+        private LinkedTaskList list;
+
+        public IteratorLinkedList(LinkedTaskList list, Node node) {
+            this.list = list;
+            this.node = node;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public Task next() {
+            if (node == null) {
+                throw new NoSuchElementException();
+            }
+            currentTask = (Task) node.item;
+            node = node.next;
+            return currentTask;
+        }
+
+        @Override
+        public void remove() {
+            if (currentTask == null) {
+                throw new IllegalStateException();
+            }
+            list.remove(currentTask);
+            currentTask = null;
+        }
     }
 }

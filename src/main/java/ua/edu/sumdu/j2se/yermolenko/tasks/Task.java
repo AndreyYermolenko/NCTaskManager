@@ -217,4 +217,17 @@ public class Task {
     public String toString() {
         return title;
     }
+
+    @Override
+    public Task clone() {
+        Task task;
+        if (this.repeat) {
+            task = new Task(this.title, this.start, this.end, this.interval);
+            task.setActive(this.active);
+        } else {
+            task = new Task(this.title, this.time);
+            task.setActive(this.active);
+        }
+        return task;
+    }
 }

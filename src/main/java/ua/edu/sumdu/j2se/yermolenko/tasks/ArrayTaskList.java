@@ -1,12 +1,14 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList {
     private int initialSize = 10;
     private Task[] arrayTask = new Task[initialSize];
-    private int currentIndex = 0;
+    private int size = 0;
 
 
     public ArrayTaskList() {
@@ -15,15 +17,20 @@ public class ArrayTaskList {
         this.initialSize = initialSize;
     }
 
+    @Override
+    public AbstractTaskList createList() {
+        return new ArrayTaskList();
+    }
+
     public void add(Task task) {
         int sizeArr = arrayTask.length;
-        if (currentIndex < sizeArr) {
-            arrayTask[currentIndex] = task;
+        if (size < sizeArr) {
+            arrayTask[size] = task;
         } else {
             arrayTask = arrayExpansion(arrayTask);
-            arrayTask[currentIndex] = task;
+            arrayTask[size] = task;
         }
-        currentIndex++;
+        size++;
     }
     private Task[] arrayExpansion(Task[] arrOld) {
         int sizeNewArr = arrOld.length*2;
@@ -42,7 +49,7 @@ public class ArrayTaskList {
                     task.equals(taskCompare)) {
                 arrayTask[i] = null;
                 arrayTask = shiftArray(arrayTask, i); //нужно ли делать возврат ссылки на массив явно?
-                currentIndex--;
+                size--;
                 return true;
             }
         }
@@ -56,26 +63,14 @@ public class ArrayTaskList {
     }
 
     public int size() {
-        return currentIndex;
+        return size;
     }
 
     public Task getTask(int index) {
-        if (index >= currentIndex && index < 0) {
+        if (index >= size && index < 0) {
             throw new IndexOutOfBoundsException();
         }
         return arrayTask[index];
-    }
-
-    public ArrayTaskList incoming(int from, int to) {
-        ArrayTaskList cutList = new ArrayTaskList();
-        for (int i = 0; i < currentIndex; i++) {
-            Task task = arrayTask[i];
-            int incoming = task.nextTimeAfter(from);
-            if (incoming < to && incoming != -1) {
-                cutList.add(task);
-            }
-        }
-        return cutList;
     }
 
     @Override
@@ -83,15 +78,75 @@ public class ArrayTaskList {
         if (this == o) return true;
         if (!(o instanceof ArrayTaskList)) return false;
         ArrayTaskList that = (ArrayTaskList) o;
-        return initialSize == that.initialSize &&
-                currentIndex == that.currentIndex &&
-                Arrays.equals(arrayTask, that.arrayTask);
+
+        if (size == that.size) {
+            Iterator<Task> iterator1 = this.iterator();
+            Iterator<Task> iterator2 = that.iterator();
+            while (iterator1.hasNext()) {
+                if (!iterator1.next().equals(iterator2.next())) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(initialSize, currentIndex);
+        int result = Objects.hash(initialSize, size);
         result = 31 * result + Arrays.hashCode(arrayTask);
         return result;
+    }
+
+    @Override
+    public ArrayTaskList clone() {
+        ArrayTaskList list = new ArrayTaskList();
+        Iterator<Task> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            list.add(iterator.next().clone());
+        }
+        return list;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new IteratorArrayList(this);
+    }
+
+    private class IteratorArrayList implements Iterator<Task> {
+        private ArrayTaskList list;
+        private int currentIndex = 0;
+        private Task currentTask;
+
+        public IteratorArrayList(ArrayTaskList list) {
+            this.list = list;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex < list.size();
+        }
+
+        @Override
+        public Task next() {
+            if (currentIndex >= list.size()) {
+                throw new NoSuchElementException();
+            }
+            currentTask = list.getTask(currentIndex);
+            currentIndex++;
+            return currentTask;
+        }
+
+        @Override
+        public void remove() {
+            if (currentTask == null) {
+                throw new IllegalStateException();
+            }
+            list.remove(currentTask);
+            currentIndex--;
+            currentTask = null;
+        }
     }
 }
