@@ -1,24 +1,85 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks;
 
+import java.util.ArrayList;
+
 public class Main {
 
 	public static void main(String[] args) {
-//		Task task = new Task("some", 10);
+
+//	    AbstractTaskList list1 = new ArrayTaskList();
+//        AbstractTaskList list2 = new LinkedTaskList();
+//
+//        for (int i = 0; i < 10; i++) {
+//            list1.add(new Task("someTask" + i, i));
+//            list2.add(new Task("someTask" + i, i));
+//        }
+//
+//        list1.forEach(System.out::println);
+//        System.out.println();
+//        list2.forEach(System.out::println);
+        
+
 //		Task task1 = task.clone();
 //		AbstractTaskList list = new ArrayTaskList();
 //        System.out.println(list.getClass());
 
+//        Task task1 = new Task("some1", 10);
+//        Task task2 = task1.clone();
+//        task2.setTime(15);
+//        System.out.println(task1.toString());
+//        System.out.println(task2.toString());
 
-        AbstractTaskList listTest = new ArrayTaskList();
-        for (int i = 0; i < 100; i++) {
-            Task taskTest = new Task("some" + i, i);
+
+
+//        Task task1 = new Task("some1", 10);
+//        Task task2 = new Task("some1", 10);
+//        System.out.println(task1.equals(task2));
+//
+//        task2.setTime(10, 100, 10);
+//        task2.setTime(10);
+//        System.out.println(task1.equals(task2));
+
+
+
+//        Task task2 = new Task("some2", 10, 30, 3);
+
+
+
+//        ArrayTaskList listTest = new ArrayTaskList();
+//        for (int i = 0; i < 500000; i++) {
+//            Task taskTest = new Task("some" + i, i);
+//            taskTest.setActive(true);
+//            listTest.add(taskTest);
+//        }
+//
+//        long start = System.currentTimeMillis();
+//        ArrayTaskList list = listTest.clone();
+//        long finish = System.currentTimeMillis();
+//        System.out.println(finish - start);
+
+
+        ArrayTaskList listTest = new ArrayTaskList();
+        for (int i = 0; i < 25; i++) {
+            Task taskTest = new Task("some" + i, i, i + 10, 1);
             taskTest.setActive(true);
             listTest.add(taskTest);
         }
-//
-        AbstractTaskList listTest1 = listTest.incoming(90, 105);
 
-        listTest1.forEach(System.out::println);
+        AbstractTaskList listTest1 = listTest.incoming(5, 15);
+        System.out.println(listTest1.toString());
+
+//        ArrayTaskList list1 = listTest.clone();
+//        //listTest.remove(listTest.getTask(0));
+//        listTest.getTask(0).setTime(999);
+//        System.out.println(list1);
+//        System.out.println(listTest);
+
+//        System.out.println(list1.toString());
+//        System.out.println(listTest.toString());
+//
+
+
+//        listTest1.forEach(System.out::println);
 //        for(Task l: listTest1) {
 //            System.out.println(l);
 //        }

@@ -1,14 +1,16 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList {
     private int size = 0;
     private Node<Task> first;
     private Node<Task> last;
 
-    private class Node<Task> {
+    private class Node<Task> implements Cloneable {
         Task item;
         Node<Task> next;
         Node<Task> prev;
@@ -124,6 +126,7 @@ public class LinkedTaskList extends AbstractTaskList {
             return getTaskFromEnd(index);
         }
     }
+
     private Task getTaskFromBegin(int index){
         Node<Task> temp = first;
         int number = 0;
@@ -165,14 +168,29 @@ public class LinkedTaskList extends AbstractTaskList {
 
     @Override
     public int hashCode() {
-        int firstItemTime = first.item.getTime();
-        int lastItemTime = last.item.getTime();
-        return 31* size*firstItemTime*lastItemTime;
+        return 31* size;
     }
+
+//    @Override
+//    public LinkedTaskList clone() {
+//        LinkedTaskList list = new LinkedTaskList();
+//        Iterator<Task> iterator = this.iterator();
+//        while (iterator.hasNext()) {
+//            list.add(iterator.next().clone());
+//        }
+//        return list;
+//    }
 
     @Override
     public LinkedTaskList clone() {
-        LinkedTaskList list = new LinkedTaskList();
+        LinkedTaskList list = null;
+        try {
+            list = (LinkedTaskList) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        list.first = list.last = null;
+        list.size = 0;
         Iterator<Task> iterator = this.iterator();
         while (iterator.hasNext()) {
             list.add(iterator.next().clone());
@@ -218,5 +236,14 @@ public class LinkedTaskList extends AbstractTaskList {
             list.remove(currentTask);
             currentTask = null;
         }
+    }
+
+    public Stream<Task> getStream() {
+        LinkedList list = new LinkedList();
+        Iterator<Task> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list.stream();
     }
 }

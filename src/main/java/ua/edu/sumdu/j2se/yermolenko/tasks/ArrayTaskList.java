@@ -1,20 +1,19 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class ArrayTaskList extends AbstractTaskList {
     private int initialSize = 10;
-    private Task[] arrayTask = new Task[initialSize];
+    private Task[] arrayTask;
     private int size = 0;
 
 
     public ArrayTaskList() {
+        arrayTask = new Task[initialSize];
     }
-    public ArrayTaskList(int initialSize) {
-        this.initialSize = initialSize;
+    public ArrayTaskList(int initSize) {
+        arrayTask = new Task[initSize];
     }
 
     @Override
@@ -95,17 +94,34 @@ public class ArrayTaskList extends AbstractTaskList {
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(initialSize, size);
-        result = 31 * result + Arrays.hashCode(arrayTask);
-        return result;
+        return 31 * size;
     }
+
+//    @Override
+//    public ArrayTaskList clone() {
+//        ArrayTaskList list = new ArrayTaskList(size);
+//        list.size = size;
+//        int index = 0;
+//        while (index < size) {
+//            list.arrayTask[index] = arrayTask[index].clone();
+//            index++;
+//        }
+//        return list;
+//    }
 
     @Override
     public ArrayTaskList clone() {
-        ArrayTaskList list = new ArrayTaskList();
-        Iterator<Task> iterator = this.iterator();
-        while (iterator.hasNext()) {
-            list.add(iterator.next().clone());
+        ArrayTaskList list = null;
+        try {
+            list = (ArrayTaskList) super.clone();
+            list.arrayTask = arrayTask.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        int index = 0;
+        while (index < list.size) {
+            list.arrayTask[index] = list.arrayTask[index].clone();
+            index++;
         }
         return list;
     }
@@ -148,5 +164,14 @@ public class ArrayTaskList extends AbstractTaskList {
             currentIndex--;
             currentTask = null;
         }
+    }
+
+    public Stream<Task> getStream() {
+        ArrayList list = new ArrayList();
+        Iterator<Task> iterator = this.iterator();
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list.stream();
     }
 }

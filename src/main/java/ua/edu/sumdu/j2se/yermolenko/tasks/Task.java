@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.yermolenko.tasks;
 
 import java.util.Objects;
 
-public class Task {
+public class Task implements Cloneable {
     private String title;
     private int time;
     private int start;
@@ -132,9 +132,7 @@ public class Task {
         this.start = start;
         this.end = end;
         this.interval = interval;
-        if (!this.repeat) {
-            this.repeat = true;
-        }
+        this.repeat = true;
     }
 
     /*Метод возвращает true, если
@@ -194,40 +192,65 @@ public class Task {
     }
 
 
+    /*У объекта класса Task может быть два состояния:
+    * repeat == true and repeat == false.
+    * Для каждого состояния есть свой перечень
+    * значимых параметров для сравнения.*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Task)) return false;
         Task task = (Task) o;
-        return getTime() == task.getTime() &&
-                start == task.start &&
-                end == task.end &&
-                interval == task.interval &&
-                isActive() == task.isActive() &&
-                repeat == task.repeat &&
-                Objects.equals(getTitle(), task.getTitle());
+        if (repeat == task.repeat && !repeat) {
+            return title.equals(task.title) &&
+                    time == task.time &&
+                    active == task.active;
+        } else if (repeat == task.repeat && repeat){
+            return title.equals(task.title) &&
+                    start == task.start &&
+                    end == task.end &&
+                    interval == task.interval &&
+                    active == task.active;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getTime(), start, end, interval, isActive(), repeat);
+        return Objects.hash(getTitle(), isActive(), repeat);
     }
 
     @Override
     public String toString() {
-        return title;
+        StringBuilder line = new StringBuilder();
+        if (!repeat) {
+            return line.append("Task{")
+                    .append("title='").append(title).append('\'')
+                    .append(", time=").append(time)
+                    .append(", active=").append(active)
+                    .append(", repeat=").append(repeat).append('}')
+                    .toString();
+        } else {
+            return line.append("Task{")
+                    .append("title='").append(title).append('\'')
+                    .append(", start=").append(start)
+                    .append(", end=").append(end)
+                    .append(", interval=").append(interval)
+                    .append(", active=").append(active)
+                    .append(", repeat=").append(repeat).append('}')
+                    .toString();
+        }
+
     }
 
     @Override
     public Task clone() {
-        Task task;
-        if (this.repeat) {
-            task = new Task(this.title, this.start, this.end, this.interval);
-            task.setActive(this.active);
-        } else {
-            task = new Task(this.title, this.time);
-            task.setActive(this.active);
+        try {
+            return (Task) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
         }
-        return task;
+        return null;
     }
 }
