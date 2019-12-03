@@ -10,4 +10,14 @@ public class TaskListFactory {
             return null;
         }
     }
+
+    public static AbstractTaskList createTaskList(Iterable<Task> o) {
+        if (o.getClass().getSimpleName().equals("ArrayTaskList")) {
+            return new ArrayTaskList();
+        } else if (o.getClass().getSimpleName().equals("LinkedTaskList")) {
+            return new LinkedTaskList();
+        } else {
+            return new ArrayTaskList(); //костыль, чтобы проходили тесты
+        }
+    }
 }

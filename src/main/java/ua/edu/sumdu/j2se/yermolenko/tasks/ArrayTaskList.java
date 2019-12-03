@@ -9,6 +9,7 @@ public class ArrayTaskList extends AbstractTaskList {
     private int size = 0;
 
 
+
     public ArrayTaskList() {
         arrayTask = new Task[initialSize];
     }
@@ -97,18 +98,6 @@ public class ArrayTaskList extends AbstractTaskList {
         return 31 * size;
     }
 
-//    @Override
-//    public ArrayTaskList clone() {
-//        ArrayTaskList list = new ArrayTaskList(size);
-//        list.size = size;
-//        int index = 0;
-//        while (index < size) {
-//            list.arrayTask[index] = arrayTask[index].clone();
-//            index++;
-//        }
-//        return list;
-//    }
-
     @Override
     public ArrayTaskList clone() {
         ArrayTaskList list = null;
@@ -174,4 +163,5 @@ public class ArrayTaskList extends AbstractTaskList {
         }
         return list.stream();
     }
+
 }

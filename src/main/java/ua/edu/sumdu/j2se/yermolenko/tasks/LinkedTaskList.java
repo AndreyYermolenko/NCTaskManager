@@ -171,21 +171,11 @@ public class LinkedTaskList extends AbstractTaskList {
         return 31* size;
     }
 
-//    @Override
-//    public LinkedTaskList clone() {
-//        LinkedTaskList list = new LinkedTaskList();
-//        Iterator<Task> iterator = this.iterator();
-//        while (iterator.hasNext()) {
-//            list.add(iterator.next().clone());
-//        }
-//        return list;
-//    }
-
     @Override
     public LinkedTaskList clone() {
         LinkedTaskList list = null;
         try {
-            list = (LinkedTaskList) super.clone();
+            list = (LinkedTaskList) super.clone();  //создание объекта с помощью .clone() быстрее, чем с помощью new
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
