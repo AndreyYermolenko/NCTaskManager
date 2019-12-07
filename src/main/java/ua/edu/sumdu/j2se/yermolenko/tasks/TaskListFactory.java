@@ -12,9 +12,9 @@ public class TaskListFactory {
     }
 
     public static AbstractTaskList createTaskList(Iterable<Task> o) {
-        if (o.getClass().getSimpleName().equals("ArrayTaskList")) {
+        if (o instanceof ArrayTaskList) {
             return new ArrayTaskList();
-        } else if (o.getClass().getSimpleName().equals("LinkedTaskList")) {
+        } else if (o instanceof LinkedTaskList) {
             return new LinkedTaskList();
         } else {
             return new ArrayTaskList(); //костыль, чтобы проходили тесты
