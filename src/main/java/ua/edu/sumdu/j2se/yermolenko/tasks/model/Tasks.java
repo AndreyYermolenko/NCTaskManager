@@ -3,6 +3,8 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.model;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.Main.uniqueTasksID;
+
 public class Tasks {
     public static Iterable<Task> incoming(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) {
         AbstractTaskList filterList = TaskListFactory.createTaskList(tasks);
@@ -36,6 +38,35 @@ public class Tasks {
             map.put(time, set);
         } else {
             map.get(time).add(task); //получили Set и добавили в него task
+        }
+    }
+
+    public static AbstractTaskList getNextFiveTasks(AbstractTaskList list) {
+        AbstractTaskList listNextTasks = TaskListFactory.createTaskList(list);
+        list.sort();
+        int countTasks = 0;
+        for (Task task: list) {
+            if (task.nextTimeAfter(LocalDateTime.now()) != null) {
+                listNextTasks.add(task);
+                countTasks++;
+            }
+            if (countTasks == 5) {
+                break;
+            }
+        }
+        return listNextTasks;
+    }
+
+    /*Метод генерирует уникальный трёхзначный
+    * ID для задачи.*/
+    public static int generateUniqueID() {
+        int ID;
+        while (true) {
+            ID = (int) (Math.random() * 1000);
+            if (!uniqueTasksID.contains(ID) && ID >= 100 && ID <= 999) {
+                uniqueTasksID.add(ID);
+                return ID;
+            }
         }
     }
 }

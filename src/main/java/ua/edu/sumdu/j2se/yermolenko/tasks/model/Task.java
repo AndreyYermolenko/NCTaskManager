@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Task implements Cloneable, Serializable, Comparable<Task> {
     private String title;
+    private final int ID;
     private LocalDateTime time;
     private LocalDateTime start;
     private LocalDateTime end;
@@ -17,25 +18,27 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
     private boolean repeat;
     private static final long serialVersionUID = 1;
 
-    public Task(String title, LocalDateTime time) {
+    public Task(String title, int ID, LocalDateTime time) {
         setTime(time);
         this.title = title;
+        this.ID = ID;
         this.active = false;
     }
 
-    public Task(String title, LocalDateTime time, boolean active) {
-        this(title, time);
+    public Task(String title, int ID, LocalDateTime time, boolean active) {
+        this(title, ID, time);
         this.active = active;
     }
 
-    public Task(String title, LocalDateTime start, LocalDateTime end, int interval) {
+    public Task(String title, int ID, LocalDateTime start, LocalDateTime end, int interval) {
         setTime(start, end, interval);
         this.title = title;
+        this.ID = ID;
         this.active = false;
     }
 
-    public Task(String title, LocalDateTime start, LocalDateTime end, int interval, boolean active) {
-        this(title, start, end, interval);
+    public Task(String title, int ID, LocalDateTime start, LocalDateTime end, int interval, boolean active) {
+        this(title, ID, start, end, interval);
         this.active = active;
     }
 
@@ -46,6 +49,11 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public int getID() {
+        return ID;
+    }
+
 
     public boolean isActive() {
         return this.active;
@@ -206,6 +214,7 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         if (!repeat) {
             return line.append("Task{")
                     .append("title='").append(title).append('\'')
+                    .append(", ID=").append(ID)
                     .append(", time=").append(time.format(formatter))
                     .append(", active=").append(active)
                     .append(", repeat=").append(repeat).append('}')
@@ -213,14 +222,45 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         } else {
             return line.append("Task{")
                     .append("title='").append(title).append('\'')
+                    .append(", ID=").append(ID)
                     .append(", start=").append(start.format(formatter))
                     .append(", end=").append(end.format(formatter))
-                    .append(", interval=").append(interval)
+                    .append(", interval= ").append(parseInterval(interval))
                     .append(", active=").append(active)
                     .append(", repeat=").append(repeat).append('}')
                     .toString();
         }
 
+    }
+
+    public String getDescription() {
+        StringBuilder line = new StringBuilder();
+        if (!repeat) {
+            return line.append("Task{")
+                    .append("title='").append(title).append('\'')
+                    .append(", ID=").append(ID)
+                    .append(", active=").append(active)
+                    .append(", repeat=").append(repeat).append('}')
+                    .toString();
+        } else {
+            return line.append("Task{")
+                    .append("title='").append(title).append('\'')
+                    .append(", ID=").append(ID)
+                    .append(", active=").append(active)
+                    .append(", repeat=").append(repeat)
+                    .append(", interval= ").append(parseInterval(interval))
+                    .append('}').toString();
+        }
+    }
+    private StringBuilder parseInterval(int interval) {
+        StringBuilder intervalString = new StringBuilder();
+        int days = interval/86400;
+        int hours = (interval % 86400) / 3600;
+        int minutes = (interval - days*86400 - hours*3600) / 60;
+        intervalString.append(days).append("d ")
+                .append(hours).append("h ")
+                .append(minutes).append("m");
+        return intervalString;
     }
 
     /*Объект класса LocalDateTime клонируется,

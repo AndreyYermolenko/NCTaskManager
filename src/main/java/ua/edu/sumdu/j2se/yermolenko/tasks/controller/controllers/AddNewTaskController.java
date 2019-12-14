@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks.controller.controllers;
 
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.Main;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 
@@ -8,8 +9,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ValidateData.*;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.menuSetTime;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ServiceMethods.*;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.writeBinary;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.generateUniqueID;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.printMenuSetTime;
 
 public class AddNewTaskController extends AbstractController {
     public AddNewTaskController(int menuNumber) {
@@ -27,22 +30,25 @@ public class AddNewTaskController extends AbstractController {
             if ("".equals(title)) {
                 throw new IllegalArgumentException();
             }
+            int ID = generateUniqueID();
 
-            menuSetTime();
+            printMenuSetTime();
             dateTime = splitDate(reader.readLine());
             if (dateTime.length == 1) {
                 LocalDateTime time = parseDateTime(dateTime[0]);
-                newTask = new Task(title, time);
+                newTask = new Task(title, ID, time);
                 newTask.setActive(true);
                 list.add(newTask);
+                writeBinary(list, Main.file);
                 System.out.println("Задача успешно создана!");
             } else {
                 LocalDateTime start = parseDateTime(dateTime[0]);
-                int interval = Integer.parseInt(dateTime[1]);
+                int interval = parseInterval(dateTime[1]);
                 LocalDateTime end = parseDateTime(dateTime[2]);
-                newTask = new Task(title, start, end, interval);
+                newTask = new Task(title, ID, start, end, interval);
                 newTask.setActive(true);
                 list.add(newTask);
+                writeBinary(list, Main.file);
                 System.out.println("Задача успешно создана!");
             }
         } catch (IllegalArgumentException | DateTimeParseException e) {

@@ -23,12 +23,12 @@ class AbstractTaskListTest {
     LocalDateTime date5 = LocalDateTime.now().plusDays(5);
     LocalDateTime date6 = LocalDateTime.now().plusDays(6);
 
-    Task task1 = new Task("task1", dateStart1, dateEnd1, interval1, true);
-    Task task2 = new Task("task2", dateStart2, dateEnd2, interval2, true);
-    Task task3 = new Task("task3", dateStart3, dateEnd3, interval3, true);
-    Task task4 = new Task("task4", date4, false);
-    Task task5 = new Task("task5", date5, true);
-    Task task6 = new Task("task6", date6, true);
+    Task task1 = new Task("task1", 0, dateStart1, dateEnd1, interval1, true);
+    Task task2 = new Task("task2", 0, dateStart2, dateEnd2, interval2, true);
+    Task task3 = new Task("task3", 0, dateStart3, dateEnd3, interval3, true);
+    Task task4 = new Task("task4", 0, date4, false);
+    Task task5 = new Task("task5", 0, date5, true);
+    Task task6 = new Task("task6", 0, date6, true);
 
 
     @org.junit.jupiter.api.Test

@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ValidateData.validateNumberMenu;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ServiceMethods.validateNumberMenu;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.*;
 
 public class MainController extends AbstractController {
@@ -26,7 +26,7 @@ public class MainController extends AbstractController {
         String inputLine;
 
         while(true) {
-            mainMenu();
+            printMainMenu();
             try {
                 inputLine = reader.readLine();
                 if ("4".equals(inputLine)) {
