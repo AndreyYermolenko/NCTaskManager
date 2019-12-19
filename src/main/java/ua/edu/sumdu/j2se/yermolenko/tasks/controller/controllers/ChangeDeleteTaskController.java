@@ -13,8 +13,7 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.Main.uniqueTasksID;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ServiceMethods.*;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ServiceMethods.parseDateTime;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.writeBinary;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.printMenuChangeDelete;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.printMenuSetTime;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.*;
 
 public class ChangeDeleteTaskController extends AbstractController {
     public ChangeDeleteTaskController(int menuNumber) {
@@ -53,30 +52,7 @@ public class ChangeDeleteTaskController extends AbstractController {
                     throw new IllegalArgumentException();
                 }
             } catch (IllegalArgumentException | DateTimeParseException e) {
-                System.out.println("WARNING: Сделайте правильный ввод!");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public int inputID(BufferedReader reader) {
-        while(true) {
-            System.out.println("Введите ID задачи: трёхзначное целое число." + "\n"
-                    + "Или введите 0 для выхода в главное меню.");
-            try {
-                String line = reader.readLine();
-                if("0".equals(line)) {
-                    return 0;
-                }
-                int ID = parseID(line);
-                if (uniqueTasksID.contains(ID)) {
-                    return ID;
-                } else {
-                    throw new IllegalArgumentException();
-                }
-            } catch (IllegalArgumentException | DateTimeParseException e) {
-                System.out.println("WARNING: Сделайте правильный ввод!");
+                printErr("WARNING: Сделайте правильный ввод!");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -101,20 +77,20 @@ public class ChangeDeleteTaskController extends AbstractController {
     }
 
     private void changeName(BufferedReader reader, Task task) {
-        System.out.println("Текущее имя: " + task.getTitle() + "\n"
+        printText("Текущее имя: " + task.getTitle() + "\n"
                         + "Введите новое имя задачи: "
                 );
         try {
             String name = reader.readLine();
             task.setTitle(name);
-            System.out.println("Имя успешно изменено!");
+            printText("Имя успешно изменено!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void changeActivity(BufferedReader reader, Task task) {
-        System.out.println("Текущая активность задачи: " + task.isActive() + "\n"
+        printText("Текущая активность задачи: " + task.isActive() + "\n"
                 + "Измените активность вводом true/false: "
         );
         try {
@@ -123,7 +99,7 @@ public class ChangeDeleteTaskController extends AbstractController {
                 throw new IllegalArgumentException();
             }
             task.setActive(Boolean.parseBoolean(activity));
-            System.out.println("Активность задачи успешно изменена!");
+            printText("Активность задачи успешно изменена!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -137,13 +113,13 @@ public class ChangeDeleteTaskController extends AbstractController {
             if (dateTime.length == 1) {
                 LocalDateTime time = parseDateTime(dateTime[0]);
                 task.setTime(time);
-                System.out.println("Время успешно изменено!");
+                printText("Время успешно изменено!");
             } else {
                 LocalDateTime start = parseDateTime(dateTime[0]);
                 int interval = parseInterval(dateTime[1]);
                 LocalDateTime end = parseDateTime(dateTime[2]);
                 task.setTime(start, end, interval);
-                System.out.println("Время успешно изменено!");
+                printText("Время успешно изменено!");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,7 +127,7 @@ public class ChangeDeleteTaskController extends AbstractController {
     }
 
     private void deleteTask(BufferedReader reader, AbstractTaskList list, Task task) {
-        System.out.println("Вы действительно хотите удалить задачу " + task.getTitle() + "?" + "\n"
+        printText("Вы действительно хотите удалить задачу " + task.getTitle() + "?" + "\n"
                 + "Введите true/false: "
         );
         try {
@@ -159,7 +135,7 @@ public class ChangeDeleteTaskController extends AbstractController {
             if(confirm.equals("true") ) {
                 list.remove(task);
                 taskExist = false;
-                System.out.println("Задача успешно удалена!");
+                printText("Задача успешно удалена!");
             } else if (confirm.equals("false")) {
                 return;
             } else {
@@ -167,6 +143,29 @@ public class ChangeDeleteTaskController extends AbstractController {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private int inputID(BufferedReader reader) {
+        while(true) {
+            printText("Введите ID задачи: трёхзначное целое число." + "\n"
+                    + "Или введите 0 для выхода в главное меню.");
+            try {
+                String line = reader.readLine();
+                if("0".equals(line)) {
+                    return 0;
+                }
+                int ID = parseID(line);
+                if (uniqueTasksID.contains(ID)) {
+                    return ID;
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            } catch (IllegalArgumentException | DateTimeParseException e) {
+                printErr("WARNING: Сделайте правильный ввод!");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ import java.time.format.DateTimeParseException;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.ServiceMethods.*;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.writeBinary;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.generateUniqueID;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.printMenuSetTime;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.*;
 
 public class AddNewTaskController extends AbstractController {
     public AddNewTaskController(int menuNumber) {
@@ -25,7 +25,7 @@ public class AddNewTaskController extends AbstractController {
         String title;
         String[] dateTime;
         try {
-            System.out.println("Введите название задачи: ");
+            printText("Введите название задачи: ");
             title = reader.readLine();
             if ("".equals(title)) {
                 throw new IllegalArgumentException();
@@ -40,7 +40,7 @@ public class AddNewTaskController extends AbstractController {
                 newTask.setActive(true);
                 list.add(newTask);
                 writeBinary(list, Main.file);
-                System.out.println("Задача успешно создана!");
+                printText("Задача успешно создана!");
             } else {
                 LocalDateTime start = parseDateTime(dateTime[0]);
                 int interval = parseInterval(dateTime[1]);
@@ -49,10 +49,10 @@ public class AddNewTaskController extends AbstractController {
                 newTask.setActive(true);
                 list.add(newTask);
                 writeBinary(list, Main.file);
-                System.out.println("Задача успешно создана!");
+                printText("Задача успешно создана!");
             }
         } catch (IllegalArgumentException | DateTimeParseException e) {
-            System.out.println("WARNING: Сделайте правильный ввод!");
+            printErr("WARNING: Сделайте правильный ввод!");
         } catch (IOException e) {
             e.printStackTrace();
         }

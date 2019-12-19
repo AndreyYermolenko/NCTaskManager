@@ -37,4 +37,12 @@ public class TextMenu {
                 + "Например: 24-08-2020 16:00$01:05:04$26-08-2020 16:00" + "\n"
                 + "Ваш ввод:");
     }
+
+    public static void printText(String text) {
+        System.out.println(text);
+    }
+
+    public static void printErr(String err) {
+        System.err.println(err);
+    }
 }

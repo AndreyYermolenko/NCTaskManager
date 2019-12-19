@@ -39,7 +39,7 @@ public class MainController extends AbstractController {
                     throw new IllegalArgumentException();
                 }
             } catch (IllegalArgumentException e) {
-                System.out.println("WARNING: Сделайте правильный ввод!");
+                printErr("WARNING: Сделайте правильный ввод!");
             } catch (IOException e) {
                 e.printStackTrace();
             }

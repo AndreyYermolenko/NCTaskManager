@@ -1,12 +1,11 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks.controller;
-
-import com.google.gson.internal.bind.util.ISO8601Utils;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 
 import java.time.LocalDateTime;
 import java.util.SortedMap;
 
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.calendar;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.printErr;
 
 public class CheckTasksThread extends Thread {
     AbstractTaskList list;
@@ -22,10 +21,10 @@ public class CheckTasksThread extends Thread {
         while (true) {
             mapNextTasks = calendar(list, LocalDateTime.now(), LocalDateTime.now().plusMinutes(10));
             if (!mapNextTasks.isEmpty()) {
-                System.out.println("***" + "\n"
-                        + "УВЕДОМЛЕНИЕ! Скоро должны выполниться следующие задачи: ");
-                System.out.println(mapNextTasks);
-                System.out.println("***");
+                printErr("***" + "\n"
+                        + "УВЕДОМЛЕНИЕ! Скоро должны выполниться следующие задачи: "
+                        + mapNextTasks + "\n"
+                        + "***");
             }
             try {
                 Thread.sleep(300000);
