@@ -5,10 +5,22 @@ import com.google.gson.Gson;
 import java.io.*;
 
 public class TaskIO {
+
     private static File file = new File("src" + File.separator
             + "main" + File.separator
             + "resources" + File.separator
             + "data.txt");
+
+
+    public static void serialization(AbstractTaskList tasks) {
+        writeBinary(tasks, file);
+    }
+
+    public static void deSerialization(AbstractTaskList tasks) {
+        readBinary(tasks, file);
+    }
+
+    //********************
 
     public static void write(AbstractTaskList tasks, OutputStream out) throws IOException {
         ObjectOutputStream objOut = new ObjectOutputStream(out);
@@ -24,7 +36,7 @@ public class TaskIO {
         }
     }
 
-    public static void writeBinary(AbstractTaskList tasks) {
+    public static void writeBinary(AbstractTaskList tasks, File file) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
             out.writeObject(tasks);
             out.flush();
@@ -35,7 +47,7 @@ public class TaskIO {
         }
     }
 
-    public static void readBinary(AbstractTaskList tasks) {
+    public static void readBinary(AbstractTaskList tasks, File file) {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
             AbstractTaskList list = (AbstractTaskList) in.readObject();
             for(Task task: list) {

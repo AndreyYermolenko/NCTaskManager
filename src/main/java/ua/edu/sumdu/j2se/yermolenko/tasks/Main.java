@@ -21,8 +21,8 @@ import ua.edu.sumdu.j2se.yermolenko.tasks.view.view.*;
 import java.io.*;
 import java.util.HashSet;
 
-import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.readBinary;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.writeBinary;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.deSerialization;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.serialization;
 //24-08-2020 16:00$01:05:04$26-08-2020 16:00
 //26-12-2019 11:20$00:00:5$27-12-2019 21:00
 //26-12-2019 23:50
@@ -102,7 +102,7 @@ public class Main {
         mainMenu.setAddDeleteTasks(addNewTaskImplView);
         mainMenu.setChangeDeleteTasks(changeDeleteTaskImplView);
 
-        readBinary(list);
+        deSerialization(list);
 
         //проверка и уведомление о грядущих задачах
         CheckTasksThread threadDemon = new CheckTasksThread(list);
@@ -120,7 +120,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        writeBinary(list);
+        serialization(list);
     }
 }
 

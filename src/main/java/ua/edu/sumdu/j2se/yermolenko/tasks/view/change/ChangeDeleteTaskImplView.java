@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
 import static ua.edu.sumdu.j2se.yermolenko.tasks.Main.uniqueTasksID;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.writeBinary;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.serialization;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printText;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.parseID;
@@ -63,7 +63,7 @@ public class ChangeDeleteTaskImplView implements View {
             try {
                 inputLine = reader.readLine();
                 if ("".equals(inputLine)) {
-                    writeBinary(listTasks);
+                    serialization(listTasks);
                     break;
                 }
                 if (validateNumberMenu(inputLine, rexEx)) {

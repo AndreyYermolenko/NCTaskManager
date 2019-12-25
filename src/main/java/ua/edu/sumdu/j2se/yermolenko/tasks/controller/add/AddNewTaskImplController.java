@@ -7,7 +7,7 @@ import ua.edu.sumdu.j2se.yermolenko.tasks.view.View;
 
 import java.time.LocalDateTime;
 
-import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.writeBinary;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.model.TaskIO.serialization;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.generateUniqueID;
 
 public class AddNewTaskImplController implements Controller {
@@ -39,7 +39,7 @@ public class AddNewTaskImplController implements Controller {
                     true);
         }
         list.add(newTask);
-        writeBinary(list);
+        serialization(list);
         view.doShow(true);
     }
 }
