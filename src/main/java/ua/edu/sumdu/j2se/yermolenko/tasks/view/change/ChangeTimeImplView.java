@@ -1,7 +1,8 @@
-package ua.edu.sumdu.j2se.yermolenko.tasks.view.add;
+package ua.edu.sumdu.j2se.yermolenko.tasks.view.change;
 
 import ua.edu.sumdu.j2se.yermolenko.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.View;
 
 import java.io.BufferedReader;
@@ -11,8 +12,9 @@ import java.time.format.DateTimeParseException;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.*;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.*;
 
-public class AddNewTaskImplView implements View {
+public class ChangeTimeImplView implements View {
     private BufferedReader reader;
+    private Task task;
     private Controller controller;
 
     public void setController(Controller controller) {
@@ -20,27 +22,20 @@ public class AddNewTaskImplView implements View {
     }
 
     @Override
-    public void doWork(Object...args) {
+    public void doWork(Object... args) {
         this.reader = (BufferedReader) args[0];
-        AbstractTaskList list = (AbstractTaskList) args[1];
-        String title;
+        this.task = (Task) args[1];
         String[] dateTime;
+
         try {
-            printText("Введите название задачи: ");
-            title = reader.readLine();
-            if ("".equals(title)) {
-                throw new IllegalArgumentException();
-            }
             printMenuSetTime();
             dateTime = splitDate(reader.readLine());
             if ((dateTime.length == 1)) {
-                controller.doWork(list,
-                        title,
+                controller.doWork(task,
                         parseDateTime(dateTime[0])
                 );
             } else {
-                controller.doWork(list,
-                        title,
+                controller.doWork(task,
                         parseDateTime(dateTime[0]),
                         parseDateTime(dateTime[2]),
                         parseInterval(dateTime[1])
@@ -55,6 +50,6 @@ public class AddNewTaskImplView implements View {
 
     @Override
     public void doShow(Object o) {
-        System.out.println("Задача успешно добавлена!");
+        printText("Время успешно изменено!");
     }
 }

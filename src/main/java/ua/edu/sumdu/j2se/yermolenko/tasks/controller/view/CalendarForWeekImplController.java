@@ -12,7 +12,7 @@ import java.util.SortedMap;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.calendar;
 
 public class CalendarForWeekImplController implements Controller {
-    View view;
+    private View view;
 
     public void setView(View view) {
         this.view = view;

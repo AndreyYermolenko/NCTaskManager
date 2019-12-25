@@ -8,7 +8,7 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.calendar;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
 
 public class CheckTasksThread extends Thread {
-    AbstractTaskList list;
+    private AbstractTaskList list;
 
 
     public CheckTasksThread(AbstractTaskList list) {

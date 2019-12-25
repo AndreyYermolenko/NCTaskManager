@@ -1,12 +1,11 @@
-package ua.edu.sumdu.j2se.yermolenko.tasks.controller.view;
+package ua.edu.sumdu.j2se.yermolenko.tasks.controller.change;
 
 import ua.edu.sumdu.j2se.yermolenko.tasks.controller.Controller;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.View;
 
-import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.getNextFiveTasks;
-
-public class NextFiveTasksImplController implements Controller {
+public class DeleteTaskImplController implements Controller {
     private View view;
 
     public void setView(View view) {
@@ -14,9 +13,10 @@ public class NextFiveTasksImplController implements Controller {
     }
 
     @Override
-    public void doWork(Object...args) {
+    public void doWork(Object... args) {
         AbstractTaskList list = (AbstractTaskList) args[0];
-        AbstractTaskList listNextTask = getNextFiveTasks(list);
-        view.doShow(listNextTask);
+        Task task = (Task) args[1];
+        list.remove(task);
+        view.doShow(true);
     }
 }

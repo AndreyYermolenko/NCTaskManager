@@ -48,4 +48,11 @@ public class ServiceMethods {
             throw new IllegalArgumentException();
         }
     }
+
+    public static boolean parseBoolean(String activity) {
+        if(!activity.equals("true") && !activity.equals("false")) {
+            throw new IllegalArgumentException();
+        }
+        return Boolean.parseBoolean(activity);
+    }
 }

@@ -9,9 +9,10 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.validateNum
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
 
 public class MainMenuImplView implements View {
-    View viewTasks;
-    View addDeleteTasks;
-    View changeDeleteTasks;
+    private BufferedReader reader;
+    private View viewTasks;
+    private View addDeleteTasks;
+    private View changeDeleteTasks;
 
     public void setViewTasks(View viewTasks) {
         this.viewTasks = viewTasks;
@@ -25,7 +26,9 @@ public class MainMenuImplView implements View {
         this.changeDeleteTasks = changeDeleteTasks;
     }
 
-    public void doWork(BufferedReader reader, AbstractTaskList listTasks) {
+    public void doWork(Object...args) {
+        this.reader = (BufferedReader) args[0];
+        AbstractTaskList listTasks = (AbstractTaskList) args[1];
         int number;
         String inputLine;
         String regEx = "[1-3]";

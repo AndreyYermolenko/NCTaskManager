@@ -10,10 +10,11 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.validateNum
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
 
 public class ViewTasksImplView implements View {
-    View view1;
-    View view2;
-    View view3;
-    View view4;
+    private BufferedReader reader;
+    private View view1;
+    private View view2;
+    private View view3;
+    private View view4;
 
     public void setView1(View view1) {
         this.view1 = view1;
@@ -32,7 +33,9 @@ public class ViewTasksImplView implements View {
     }
 
     @Override
-    public void doWork(BufferedReader reader, AbstractTaskList listTasks) {
+    public void doWork(Object...args) {
+        this.reader = (BufferedReader) args[0];
+        AbstractTaskList listTasks = (AbstractTaskList) args[1];
         doShow(true);
         String inputLine;
         String rexEx = "[1-4]";

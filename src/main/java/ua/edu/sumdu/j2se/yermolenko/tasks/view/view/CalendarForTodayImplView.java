@@ -1,7 +1,6 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks.view.view;
 
 import ua.edu.sumdu.j2se.yermolenko.tasks.controller.Controller;
-import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.View;
 
@@ -14,17 +13,17 @@ import java.util.Set;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printText;
 
 public class CalendarForTodayImplView implements View {
-    BufferedReader reader;
-    Controller controller;
+    private BufferedReader reader;
+    private Controller controller;
 
     public void setController(Controller controller) {
         this.controller = controller;
     }
 
     @Override
-    public void doWork(BufferedReader reader, AbstractTaskList list) {
-        this.reader = reader;
-        controller.doWork(list);
+    public void doWork(Object...args) {
+        this.reader = (BufferedReader) args[0];
+        controller.doWork(args[1]);
     }
 
     @Override
