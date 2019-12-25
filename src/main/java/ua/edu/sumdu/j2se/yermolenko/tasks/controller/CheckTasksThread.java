@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.SortedMap;
 
 import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.calendar;
-import static ua.edu.sumdu.j2se.yermolenko.tasks.view.TextMenu.printErr;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
 
 public class CheckTasksThread extends Thread {
     AbstractTaskList list;

@@ -1,12 +1,8 @@
-package ua.edu.sumdu.j2se.yermolenko.tasks.controller;
+package ua.edu.sumdu.j2se.yermolenko.tasks.view;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
-import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.Main.uniqueTasksID;
 
 public class ServiceMethods {
     public static boolean validateNumberMenu(int number, int count) {

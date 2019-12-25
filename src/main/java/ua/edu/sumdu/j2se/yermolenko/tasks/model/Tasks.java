@@ -3,7 +3,7 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.model;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static ua.edu.sumdu.j2se.yermolenko.tasks.controller.Main.uniqueTasksID;
+import static ua.edu.sumdu.j2se.yermolenko.tasks.Main.uniqueTasksID;
 
 public class Tasks {
     public static Iterable<Task> incoming(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) {
@@ -61,9 +61,13 @@ public class Tasks {
     * ID для задачи.*/
     public static int generateUniqueID() {
         int ID;
+        int min = 100;
+        int max = 999;
+        int diff = max - min;
+        Random random = new Random();
         while (true) {
-            ID = (int) (Math.random() * 1000);
-            if (!uniqueTasksID.contains(ID) && ID >= 100 && ID <= 999) {
+            ID = random.nextInt(diff) + min;
+            if (!uniqueTasksID.contains(ID)) {
                 uniqueTasksID.add(ID);
                 return ID;
             }
