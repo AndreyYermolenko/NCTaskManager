@@ -1,12 +1,23 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Class LinkedTaskList realizes LinkedList for Tasks.
+ *
+ * @author AndreyYermolenko
+ * Created on 03.01.2020
+ */
 public class LinkedTaskList extends AbstractTaskList {
+    private static final long serialVersionUID = 1;
     private int size = 0;
     private Node<Task> first;
     private Node<Task> last;
+    private final static Logger logger = LogManager.getLogger(LinkedTaskList.class);
 
     private class Node<Task> implements Cloneable {
         Task item;
@@ -20,6 +31,10 @@ public class LinkedTaskList extends AbstractTaskList {
         }
     }
 
+    /**
+     * The method adds a new task.
+     * @param task of type Task.
+     */
     public void add(Task task) {
         Node<Task> temp;
         if (size == 0) {
@@ -28,30 +43,30 @@ public class LinkedTaskList extends AbstractTaskList {
             last = new Node<>(first, task, null);
             first.next = last;
         } else {
-            temp = last; //temp.last присвоилось автоматически
+            temp = last;
             last = new Node<>(temp, task, null);
             temp.next = last;
         }
         size++;
     }
 
+    /**
+     * The method deletes the task and returns true
+     * if the deletion is successful.
+     * @param task of type Task.
+     * @return
+     */
     public boolean remove(Task task) {
-        /*обрабатываем случай, когда первый
-        элемент совпал с task.*/
         if (task.hashCode() == first.item.hashCode() &&
                 task.equals(first.item)) {
             return removeFirstItem();
         }
 
-        /*обрабатываем случай, когда последний
-        элемент совпал с task.*/
         if (task.hashCode() == last.item.hashCode() &&
                 task.equals(last.item)) {
             return removeLastItem();
         }
 
-        /*обрабатываем другие случаи с совпадающим
-        task при size > 2 или если совпадений нет.*/
         return anotherCase(task);
     }
     private boolean removeFirstItem() {
@@ -77,15 +92,13 @@ public class LinkedTaskList extends AbstractTaskList {
     private boolean removeLastItem() {
         if (size == 2) {
             last = null;
-            size--;
-            return true;
         } else { //size > 2
             last.item = last.prev.item;
             last.prev = last.prev.prev;
             last.prev.next = last;
-            size--;
-            return true;
         }
+        size--;
+        return true;
     }
     private boolean anotherCase(Task task) {
         Node<Task> temp = first.next;
@@ -104,10 +117,19 @@ public class LinkedTaskList extends AbstractTaskList {
         }
     }
 
+    /**
+     * The method returns the size of the list.
+     * @return
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * The method returns the task with the specified index.
+     * @param index of type int.
+     * @return
+     */
     public Task getTask(int index) {
         if (index >= size && index < 0) {
             throw new IndexOutOfBoundsException();
@@ -170,8 +192,7 @@ public class LinkedTaskList extends AbstractTaskList {
         try {
             list = (LinkedTaskList) super.clone();  //создание объекта с помощью .clone() быстрее, чем с помощью new
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+            logger.error(e);        }
         list.first = list.last = null;
         list.size = 0;
         Iterator<Task> iterator = this.iterator();
@@ -221,6 +242,9 @@ public class LinkedTaskList extends AbstractTaskList {
         }
     }
 
+    /**
+     * The method sorts the list item.
+     */
     @Override
     public void sort() {
         boolean needIteration = true;

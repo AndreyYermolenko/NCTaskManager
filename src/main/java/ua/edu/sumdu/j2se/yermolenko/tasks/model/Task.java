@@ -1,12 +1,19 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks.model;
 
-import org.jetbrains.annotations.NotNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ * Class Task realizes create Task object.
+ *
+ * @author AndreyYermolenko
+ * Created on 03.01.2020
+ */
 public class Task implements Cloneable, Serializable, Comparable<Task> {
     private String title;
     private final int ID;
@@ -17,7 +24,15 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
     private boolean active;
     private boolean repeat;
     private static final long serialVersionUID = 1;
+    private final static Logger logger = LogManager.getLogger(Task.class);
 
+    /**
+     * Constructor Task creates a new Task instance.
+     *
+     * @param title of type String
+     * @param ID of type int
+     * @param time of type LocalDateTime
+     */
     public Task(String title, int ID, LocalDateTime time) {
         setTime(time);
         this.title = title;
@@ -25,11 +40,28 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         this.active = false;
     }
 
+    /**
+     * Constructor Task creates a new Task instance.
+     *
+     * @param title of type String
+     * @param ID of type int
+     * @param time of type LocalDateTime
+     * @param active of type boolean
+     */
     public Task(String title, int ID, LocalDateTime time, boolean active) {
         this(title, ID, time);
         this.active = active;
     }
 
+    /**
+     * Constructor Task creates a new Task instance.
+     *
+     * @param title of type String
+     * @param ID of type int
+     * @param start of type LocalDateTime
+     * @param end of type LocalDateTime
+     * @param interval of type int
+     */
     public Task(String title, int ID, LocalDateTime start, LocalDateTime end, int interval) {
         setTime(start, end, interval);
         this.title = title;
@@ -37,36 +69,86 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         this.active = false;
     }
 
+    /**
+     * Constructor Task creates a new Task instance.
+     *
+     * @param title of type String
+     * @param ID of type int
+     * @param start of type LocalDateTime
+     * @param end of type LocalDateTime
+     * @param interval of type int
+     * @param active of type boolean
+     */
     public Task(String title, int ID, LocalDateTime start, LocalDateTime end, int interval, boolean active) {
         this(title, ID, start, end, interval);
         this.active = active;
     }
 
+    /**
+     * Method getTitle returns the title of this Task object.
+     *
+     *
+     *
+     * @return the title (type String) of this Task object.
+     */
     public String getTitle() {
         return this.title;
     }
 
+    /**
+     * Method setTitle sets the title of this Task object.
+     *
+     *
+     *
+     * @param title the title of this Task object.
+     *
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Method getID returns the ID of this Task object.
+     *
+     *
+     *
+     * @return the ID (type int) of this Task object.
+     */
     public int getID() {
         return ID;
     }
 
-
+    /**
+     * Method isActive returns the active of this Task object.
+     *
+     *
+     *
+     * @return the active (type boolean) of this Task object.
+     */
     public boolean isActive() {
         return this.active;
     }
 
+    /**
+     * Method setActive sets the active of this Task object.
+     *
+     *
+     *
+     * @param active the active of this Task object.
+     *
+     */
     public void setActive(boolean active) {
         this.active = active;
     }
 
-    /*Метод возвращает время выполнения
-     * задачи. В случае, если задача
-     * повторяется -- возвращает
-     * время начала повторения.*/
+
+
+    /**
+     * Method getTime returns the execution time of the task.
+     * In case the task repeats, it returns the start time of the repeat.
+     *
+     * @return the time (type LocalDateTime) of this Task object.
+     */
     public LocalDateTime getTime() {
         if (!this.repeat) {
             return LocalDateTime.from(this.time);
@@ -75,11 +157,12 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         }
     }
 
-    /*Метод возвращает время начала
-     * повторения задачи. Если
-     * задача не повторяется,
-     * то возвращает время выполнения
-     * задачи.*/
+    /**
+     * Method getStartTime returns the start time of the task.
+     * If the task does not repeat, then returns the time the task completed.
+     *
+     * @return the startTime (type LocalDateTime) of this Task object.
+     */
     public LocalDateTime getStartTime() {
         if (this.repeat) {
             return LocalDateTime.from(this.start);
@@ -88,11 +171,13 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         }
     }
 
-    /*Метод возвращает время прекращения
-     * повторения задачи.
-     * Если задача не повторяется,
-     * то возвращает время выполнения
-     * задачи.*/
+
+    /**
+     * Method getEndTime returns the end time the task repeats.
+     * If the task does not repeat, then returns the time the task completed.
+     *
+     * @return the endTime (type LocalDateTime) of this Task object.
+     */
     public LocalDateTime getEndTime() {
         if (this.repeat) {
             return LocalDateTime.from(this.end);
@@ -101,11 +186,13 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         }
     }
 
-    /*Метод возвращает временной интервал
-     * между выполнениями задачи,
-     * что повторяется (в секундах).
-     * Если задача не повторяется,
-     * то возвращает 0*/
+    /**
+     * Method getRepeatInterval returns the time interval between task executions,
+     * which is repeated (in seconds). If the task does not repeat,
+     * then returns 0.
+     *
+     * @return the repeatInterval (type int) of this Task object.
+     */
     public int getRepeatInterval() {
         if (this.repeat) {
             return interval;
@@ -114,11 +201,14 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         }
     }
 
-    /*Метод устанавливает время выполнения
-     * задачи. Если задача повторяется
-     * (регулярная), то преобразует её в
-     * такую, что не повторяется
-     * (одноразовую).*/
+    /**
+     * Method setTime sets the time to complete the task.
+     * If the task is repeated (regular),
+     * then it will be converted to one that does not repeat (one-time).
+     *
+     * @param time the time of this Task object.
+     *
+     */
     public void setTime(LocalDateTime time) {
         if (time == null) {
             System.out.println("Ошибка при установке времени!");
@@ -128,12 +218,15 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         this.repeat = false;
     }
 
-    /*Метод устанавливает время
-     * начала и окончания выполнения
-     * повторяемой задачи и интервал
-     * между повторениями. Если задача
-     * не повторяется, делает её
-     * повторяющейся.*/
+    /**
+     * Method setTime sets the start and end time of the repeated task
+     * and the interval between repetitions.
+     * If the task does not repeat, makes it repeat.
+     *
+     * @param start of type LocalDateTime
+     * @param end of type LocalDateTime
+     * @param interval of type int
+     */
     public void setTime(LocalDateTime start, LocalDateTime end, int interval) {
         if (start == null || end == null
                 || start.isAfter(end)
@@ -147,13 +240,26 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         this.repeat = true;
     }
 
+    /**
+     * Method isRepeated returns the repeated of this Task object.
+     *
+     *
+     *
+     * @return the repeated (type boolean) of this Task object.
+     */
     public boolean isRepeated() {
         return this.repeat;
     }
 
-    /* Следующий момент времени должен
-     * быть > current, но может быть
-     * == end. */
+
+
+    /**
+     * Method nextTimeAfter returns the next task execution time.
+     * If the task is no longer running, it returns null.
+     *
+     * @param current of type LocalDateTime
+     * @return LocalDateTime
+     */
     public LocalDateTime nextTimeAfter(LocalDateTime current) {
         if (current == null) {
             System.out.println("Ошибка при установке времени!");
@@ -178,10 +284,6 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         }
     }
 
-    /*У объекта класса Task может быть два состояния:
-     * repeat == true and repeat == false.
-     * Для каждого состояния есть свой перечень
-     * значимых параметров для сравнения.*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -233,6 +335,13 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
 
     }
 
+    /**
+     * Method getDescription returns the description of this Task object.
+     *
+     *
+     *
+     * @return the description (type String) of this Task object.
+     */
     public String getDescription() {
         StringBuilder line = new StringBuilder();
         if (!repeat) {
@@ -252,6 +361,7 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
                     .append('}').toString();
         }
     }
+
     private StringBuilder parseInterval(int interval) {
         StringBuilder intervalString = new StringBuilder();
         int days = interval/86400;
@@ -263,20 +373,18 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         return intervalString;
     }
 
-    /*Объект класса LocalDateTime клонируется,
-     * а не копируется ссылка.*/
     @Override
     public Task clone() {
         try {
             return (Task) super.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return null;
     }
 
     @Override
-    public int compareTo(@NotNull Task that) {
+    public int compareTo(Task that) {
         LocalDateTime thisTime = this.nextTimeAfter(LocalDateTime.now());
         LocalDateTime thatTime = that.nextTimeAfter(LocalDateTime.now());
         if (thisTime == null && thatTime == null) {

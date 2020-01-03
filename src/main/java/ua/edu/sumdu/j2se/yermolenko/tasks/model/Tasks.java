@@ -5,7 +5,22 @@ import java.util.*;
 
 import static ua.edu.sumdu.j2se.yermolenko.tasks.Main.uniqueTasksID;
 
+/**
+ * Class Tasks realizes service methods for Task.
+ *
+ * @author AndreyYermolenko
+ * Created on 03.01.2020
+ */
 public class Tasks {
+
+    /**
+     * The method returns a list of tasks that belong to a given period of time.
+     *
+     * @param tasks of type Iterable<Task>
+     * @param start of type LocalDateTime
+     * @param end of type LocalDateTime
+     * @return Iterable<Task>
+     */
     public static Iterable<Task> incoming(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) {
         AbstractTaskList filterList = TaskListFactory.createTaskList(tasks);
         for(Task task: tasks) {
@@ -17,6 +32,14 @@ public class Tasks {
         return filterList;
     }
 
+    /**
+     * The method returns a Map collection,
+     * which contains all the time points with tasks in a given time period.
+     * @param tasks of type Iterable<Task>
+     * @param start of type LocalDateTime
+     * @param end of type LocalDateTime
+     * @return SortedMap<LocalDateTime, Set<Task>>
+     */
     public static SortedMap<LocalDateTime, Set<Task>> calendar(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) {
         SortedMap<LocalDateTime, Set<Task>> map = new TreeMap<LocalDateTime, Set<Task>>();
         Iterable<Task> filterList = incoming(tasks, start, end);
@@ -41,6 +64,11 @@ public class Tasks {
         }
     }
 
+    /**
+     * The method returns a list of 5 tasks that should be completed soon.
+     * @param list of type AbstractTaskList
+     * @return AbstractTaskList
+     */
     public static AbstractTaskList getNextFiveTasks(AbstractTaskList list) {
         AbstractTaskList listNextTasks = TaskListFactory.createTaskList(list);
         list.sort();
@@ -57,8 +85,10 @@ public class Tasks {
         return listNextTasks;
     }
 
-    /*Метод генерирует уникальный трёхзначный
-    * ID для задачи.*/
+    /**
+     * The method generates and returns a unique ID for tasks.
+     * @return int
+     */
     public static int generateUniqueID() {
         int ID;
         int min = 100;

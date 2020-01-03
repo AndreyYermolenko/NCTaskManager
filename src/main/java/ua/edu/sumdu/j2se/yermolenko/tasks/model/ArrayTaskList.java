@@ -1,31 +1,52 @@
 package ua.edu.sumdu.j2se.yermolenko.tasks.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.*;
 
+/**
+ * Class ArrayTaskList realizes ArrayList for Tasks.
+ *
+ * @author AndreyYermolenko
+ * Created on 03.01.2020
+ */
 public class ArrayTaskList extends AbstractTaskList {
+    private static final long serialVersionUID = 1;
     private int initialSize = 10;
     private Task[] arrayTask;
     private int size = 0;
+    private final static Logger logger = LogManager.getLogger(ArrayTaskList.class);
 
 
-
+    /**
+     * Constructor ArrayTaskList creates a new ArrayTaskList instance.
+     */
     public ArrayTaskList() {
         arrayTask = new Task[initialSize];
     }
+    /**
+     * Constructor ArrayTaskList creates a new ArrayTaskList instance.
+     *
+     * @param initSize of type int
+     */
     public ArrayTaskList(int initSize) {
         arrayTask = new Task[initSize];
     }
 
+    /**
+     * The method adds a new task.
+     * @param task of type Task.
+     */
     public void add(Task task) {
         int sizeArr = arrayTask.length;
-        if (size < sizeArr) {
-            arrayTask[size] = task;
-        } else {
+        if (size >= sizeArr) {
             arrayTask = arrayExpansion(arrayTask);
-            arrayTask[size] = task;
         }
+        arrayTask[size] = task;
         size++;
     }
+
     private Task[] arrayExpansion(Task[] arrOld) {
         int sizeNewArr = arrOld.length*2;
         Task[] arrNew = new Task[sizeNewArr];
@@ -35,20 +56,26 @@ public class ArrayTaskList extends AbstractTaskList {
         return arrNew;
     }
 
+    /**
+     * The method deletes the task and returns true
+     * if the deletion is successful.
+     * @param task of type Task.
+     * @return
+     */
     public boolean remove(Task task) {
         for (int i = 0; i < arrayTask.length; i++) {
             Task taskCompare = arrayTask[i];
-            //чтобы ускорить процесс -- сначала проверяем хеш-код
-            if (task.hashCode() == taskCompare.hashCode() &&  //вызовутся обе функции, если хеши разные?
+            if (task.hashCode() == taskCompare.hashCode() &&
                     task.equals(taskCompare)) {
                 arrayTask[i] = null;
-                arrayTask = shiftArray(arrayTask, i); //нужно ли делать возврат ссылки на массив явно?
+                arrayTask = shiftArray(arrayTask, i);
                 size--;
                 return true;
             }
         }
         return false;
     }
+
     private Task[] shiftArray(Task[] arrayTask, int shiftIdx) {
         for (int i = shiftIdx; i < arrayTask.length - 1; i++) {
             arrayTask[i] = arrayTask[i + 1];
@@ -56,10 +83,19 @@ public class ArrayTaskList extends AbstractTaskList {
         return arrayTask;
     }
 
+    /**
+     * The method returns the size of the list.
+     * @return
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * The method returns the task with the specified index.
+     * @param index
+     * @return
+     */
     public Task getTask(int index) {
         if (index >= size && index < 0) {
             throw new IndexOutOfBoundsException();
@@ -99,8 +135,7 @@ public class ArrayTaskList extends AbstractTaskList {
             list = (ArrayTaskList) super.clone();
             list.arrayTask = arrayTask.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+            logger.error(e);        }
         int index = 0;
         while (index < list.size) {
             list.arrayTask[index] = list.arrayTask[index].clone();
@@ -149,7 +184,9 @@ public class ArrayTaskList extends AbstractTaskList {
         }
     }
 
-    /*Метод сортировки Шелла*/
+    /**
+     * The method implements sorting by the Shell method.
+     */
     @Override
     public void sort() {
         int gap = this.size() / 2;
