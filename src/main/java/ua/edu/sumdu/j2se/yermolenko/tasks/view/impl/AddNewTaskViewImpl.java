@@ -19,10 +19,10 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.*;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class AddNewTaskImplView implements AddNewTaskView {
+public class AddNewTaskViewImpl implements AddNewTaskView {
     private BufferedReader reader;
     private AddNewTaskController addNewTaskController;
-    private final static Logger logger = LogManager.getLogger(AddNewTaskImplView.class);
+    private final static Logger logger = LogManager.getLogger(AddNewTaskViewImpl.class);
 
     /**
      * Method setAddNewTaskController sets the addNewTaskController of this AddNewTaskImplView object.
@@ -71,7 +71,7 @@ public class AddNewTaskImplView implements AddNewTaskView {
         } catch (IllegalArgumentException | DateTimeParseException e) {
             printErr("WARNING: Сделайте правильный ввод!");
         } catch (IOException e) {
-            logger.error(e);        }
+            logger.error("Problem adding a new task", e);        }
     }
 
     /**

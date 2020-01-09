@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeTimeImplController implements ChangeTimeController {
+public class ChangeTimeControllerImpl implements ChangeTimeController {
     private ChangeTimeView changeTimeView;
 
     /**

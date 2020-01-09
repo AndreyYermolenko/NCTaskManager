@@ -2,10 +2,10 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.view.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.interfaces.CalendarForTodayController;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.interfaces.CalendarForWeekController;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
-import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.CalendarForTodayView;
+import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.CalendarForWeekView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,30 +16,31 @@ import java.util.Set;
 import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printText;
 
 /**
- * Class CalendarForTodayImplView realizes view calendar for today.
+ * Class CalendarForWeekImplView realizes view calendar for week.
  *
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class CalendarForTodayImplView implements CalendarForTodayView {
+public class CalendarForWeekViewImpl implements CalendarForWeekView {
     private BufferedReader reader;
-    private CalendarForTodayController calendarForTodayController;
-    private final static Logger logger = LogManager.getLogger(CalendarForTodayImplView.class);
+    private CalendarForWeekController calendarForWeekController;
+    private final static Logger logger = LogManager.getLogger(CalendarForWeekViewImpl.class);
+
 
     /**
-     * Method setCalendarForTodayController sets the calendarForTodayController of this CalendarForTodayImplView object.
+     * Method setCalendarForWeekController sets the calendarForWeekController of this CalendarForWeekImplView object.
      *
      *
      *
-     * @param calendarForTodayController the calendarForTodayController of this CalendarForTodayImplView object.
+     * @param calendarForWeekController the calendarForWeekController of this CalendarForWeekImplView object.
      *
      */
-    public void setCalendarForTodayController(CalendarForTodayController calendarForTodayController) {
-        this.calendarForTodayController = calendarForTodayController;
+    public void setCalendarForWeekController(CalendarForWeekController calendarForWeekController) {
+        this.calendarForWeekController = calendarForWeekController;
     }
 
     /**
-     * Method doWork realizes view calendar for today.
+     * Method doWork realizes view calendar for week.
      *
      * @param reader of type BufferedReader
      * @param list of type AbstractTaskList
@@ -47,7 +48,7 @@ public class CalendarForTodayImplView implements CalendarForTodayView {
     @Override
     public void doWork(BufferedReader reader, AbstractTaskList list) {
         this.reader = reader;
-        calendarForTodayController.doWork(list);
+        calendarForWeekController.doWork(list);
     }
 
     /**
@@ -64,7 +65,7 @@ public class CalendarForTodayImplView implements CalendarForTodayView {
         try {
             reader.readLine();
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("Problem display calendar for week", e);
         }
     }
 }

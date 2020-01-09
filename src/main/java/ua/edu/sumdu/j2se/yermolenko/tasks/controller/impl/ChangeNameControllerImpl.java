@@ -10,7 +10,7 @@ import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.ChangeNameView;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeNameImplController implements ChangeNameController {
+public class ChangeNameControllerImpl implements ChangeNameController {
     private ChangeNameView changeNameView;
 
     /**

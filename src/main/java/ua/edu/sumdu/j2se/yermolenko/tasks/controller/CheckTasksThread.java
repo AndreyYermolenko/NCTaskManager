@@ -45,7 +45,7 @@ public class CheckTasksThread extends Thread {
             try {
                 Thread.sleep(300000);
             } catch (InterruptedException e) {
-                logger.error(e);
+                logger.error("CheckTaskThread problem", e);
             }
         }
     }

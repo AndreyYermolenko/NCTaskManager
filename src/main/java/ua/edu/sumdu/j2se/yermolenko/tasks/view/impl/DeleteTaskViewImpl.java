@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.view.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.DeleteTaskImplController;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.DeleteTaskControllerImpl;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.DeleteTaskView;
@@ -19,9 +19,9 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.parseBoolea
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class DeleteTaskImplView implements DeleteTaskView {
-    private DeleteTaskImplController deleteTaskImplController;
-    private final static Logger logger = LogManager.getLogger(DeleteTaskImplView.class);
+public class DeleteTaskViewImpl implements DeleteTaskView {
+    private DeleteTaskControllerImpl deleteTaskControllerImpl;
+    private final static Logger logger = LogManager.getLogger(DeleteTaskViewImpl.class);
 
 
     /**
@@ -29,11 +29,11 @@ public class DeleteTaskImplView implements DeleteTaskView {
      *
      *
      *
-     * @param deleteTaskImplController the deleteTaskImplController of this DeleteTaskImplView object.
+     * @param deleteTaskControllerImpl the deleteTaskImplController of this DeleteTaskImplView object.
      *
      */
-    public void setDeleteTaskImplController(DeleteTaskImplController deleteTaskImplController) {
-        this.deleteTaskImplController = deleteTaskImplController;
+    public void setDeleteTaskControllerImpl(DeleteTaskControllerImpl deleteTaskControllerImpl) {
+        this.deleteTaskControllerImpl = deleteTaskControllerImpl;
     }
 
     /**
@@ -46,7 +46,7 @@ public class DeleteTaskImplView implements DeleteTaskView {
      */
     @Override
     public void doWork(BufferedReader reader, Task task, AbstractTaskList list,
-                       ChangeDeleteTaskImplView.TaskExist taskExist) {
+                       ChangeDeleteTaskViewImpl.TaskExist taskExist) {
 
         printText("Вы действительно хотите удалить задачу " + task.getTitle() + "?" + "\n"
                 + "Введите true/false: "
@@ -54,13 +54,13 @@ public class DeleteTaskImplView implements DeleteTaskView {
         try {
             Boolean confirm = parseBoolean(reader.readLine());
             if(confirm) {
-                deleteTaskImplController.doWork(list, task);
+                deleteTaskControllerImpl.doWork(list, task);
                 taskExist.setTaskExist(false);
             } else {
                 return;
             }
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("Problem deleting a task", e);
         }
     }
 

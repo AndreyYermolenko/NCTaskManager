@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.view.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.ChangeNameImplController;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.ChangeNameControllerImpl;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.ChangeNameView;
 
@@ -17,9 +17,9 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printText;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeNameImplView implements ChangeNameView {
-    private ChangeNameImplController changeNameImplController;
-    private final static Logger logger = LogManager.getLogger(ChangeNameImplView.class);
+public class ChangeNameViewImpl implements ChangeNameView {
+    private ChangeNameControllerImpl changeNameControllerImpl;
+    private final static Logger logger = LogManager.getLogger(ChangeNameViewImpl.class);
 
 
     /**
@@ -27,11 +27,11 @@ public class ChangeNameImplView implements ChangeNameView {
      *
      *
      *
-     * @param changeNameImplController the changeNameImplController of this ChangeNameImplView object.
+     * @param changeNameControllerImpl the changeNameImplController of this ChangeNameImplView object.
      *
      */
-    public void setChangeNameImplController(ChangeNameImplController changeNameImplController) {
-        this.changeNameImplController = changeNameImplController;
+    public void setChangeNameControllerImpl(ChangeNameControllerImpl changeNameControllerImpl) {
+        this.changeNameControllerImpl = changeNameControllerImpl;
     }
 
     /**
@@ -48,9 +48,9 @@ public class ChangeNameImplView implements ChangeNameView {
         );
         try {
             String name = reader.readLine();
-            changeNameImplController.doWork(task, name);
+            changeNameControllerImpl.doWork(task, name);
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("The problem of changing the name of the task", e);
         }
     }
 

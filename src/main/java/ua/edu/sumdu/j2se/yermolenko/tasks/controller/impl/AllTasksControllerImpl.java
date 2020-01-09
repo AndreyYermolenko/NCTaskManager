@@ -10,7 +10,7 @@ import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.AllTasksView;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class AllTasksImplController implements AllTasksViewController {
+public class AllTasksControllerImpl implements AllTasksViewController {
     private AllTasksView allTasksView;
 
     /**

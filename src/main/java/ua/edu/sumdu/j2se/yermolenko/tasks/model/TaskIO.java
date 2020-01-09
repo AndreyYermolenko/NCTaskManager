@@ -57,9 +57,9 @@ public class TaskIO {
             out.writeObject(tasks);
             out.flush();
         } catch (FileNotFoundException e) {
-            logger.error(e);
+            logger.error("Serialization problem", e);
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("Serialization problem", e);
         }
     }
 
@@ -72,7 +72,7 @@ public class TaskIO {
         } catch (FileNotFoundException e) {
             System.err.println("Список задач пуст!");
         } catch (ClassNotFoundException | IOException e) {
-            logger.error(e);
+            logger.error("Serialization problem", e);
         }
     }
 
@@ -101,7 +101,7 @@ public class TaskIO {
             fileWriter.write(line);
             fileWriter.flush();
         } catch (IOException e) {
-            logger.error(e);        }
+            logger.error("Serialization problem", e);        }
     }
 
     private static void readText(AbstractTaskList tasks) {
@@ -114,6 +114,6 @@ public class TaskIO {
         } catch (FileNotFoundException e) {
             System.err.println("Список задач пуст!");
         } catch (IOException e) {
-            logger.error(e);        }
+            logger.error("Serialization problem", e);        }
     }
 }

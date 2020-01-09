@@ -10,7 +10,7 @@ import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.ChangeActivityView;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeActivityImplController implements ChangeActivityController {
+public class ChangeActivityControllerImpl implements ChangeActivityController {
     private ChangeActivityView changeActivityView;
 
     /**

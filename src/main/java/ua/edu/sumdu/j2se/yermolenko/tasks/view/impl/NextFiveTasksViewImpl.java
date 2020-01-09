@@ -19,10 +19,10 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printText;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class NextFiveTasksImplView implements NextFiveTasksView {
+public class NextFiveTasksViewImpl implements NextFiveTasksView {
     private BufferedReader reader;
     private NextFiveTasksController nextFiveTasksController;
-    private final static Logger logger = LogManager.getLogger(NextFiveTasksImplView.class);
+    private final static Logger logger = LogManager.getLogger(NextFiveTasksViewImpl.class);
 
 
     /**
@@ -64,7 +64,7 @@ public class NextFiveTasksImplView implements NextFiveTasksView {
         try {
             reader.readLine();
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("Problem display next five tasks", e);
         }
     }
 }

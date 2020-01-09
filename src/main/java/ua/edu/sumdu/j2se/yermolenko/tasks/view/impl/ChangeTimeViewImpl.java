@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.view.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.ChangeTimeImplController;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.ChangeTimeControllerImpl;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.ChangeTimeView;
 
@@ -19,20 +19,20 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.*;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeTimeImplView implements ChangeTimeView {
-    private ChangeTimeImplController changeTimeImplController;
-    private final static Logger logger = LogManager.getLogger(ChangeTimeImplView.class);
+public class ChangeTimeViewImpl implements ChangeTimeView {
+    private ChangeTimeControllerImpl changeTimeControllerImpl;
+    private final static Logger logger = LogManager.getLogger(ChangeTimeViewImpl.class);
 
     /**
      * Method setChangeTimeImplController sets the changeTimeImplController of this ChangeTimeImplView object.
      *
      *
      *
-     * @param changeTimeImplController the changeTimeImplController of this ChangeTimeImplView object.
+     * @param changeTimeControllerImpl the changeTimeImplController of this ChangeTimeImplView object.
      *
      */
-    public void setChangeTimeImplController(ChangeTimeImplController changeTimeImplController) {
-        this.changeTimeImplController = changeTimeImplController;
+    public void setChangeTimeControllerImpl(ChangeTimeControllerImpl changeTimeControllerImpl) {
+        this.changeTimeControllerImpl = changeTimeControllerImpl;
     }
 
     /**
@@ -48,11 +48,11 @@ public class ChangeTimeImplView implements ChangeTimeView {
             printMenuSetTime();
             dateTime = splitDate(reader.readLine());
             if ((dateTime.length == 1)) {
-                changeTimeImplController.doWork(task,
+                changeTimeControllerImpl.doWork(task,
                         parseDateTime(dateTime[0])
                 );
             } else {
-                changeTimeImplController.doWork(task,
+                changeTimeControllerImpl.doWork(task,
                         parseDateTime(dateTime[0]),
                         parseDateTime(dateTime[2]),
                         parseInterval(dateTime[1])
@@ -61,7 +61,7 @@ public class ChangeTimeImplView implements ChangeTimeView {
         } catch (IllegalArgumentException | DateTimeParseException e) {
             printErr("WARNING: Сделайте правильный ввод!");
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("The problem of changing the time of the task", e);
         }
     }
 

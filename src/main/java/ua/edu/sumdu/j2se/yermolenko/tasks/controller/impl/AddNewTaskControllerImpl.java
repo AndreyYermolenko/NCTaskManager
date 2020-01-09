@@ -17,7 +17,7 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.generateUniqueID;
  * @author AndreyYermolenko
  * Created on 02.01.2020
  */
-public class AddNewTaskImplController implements AddNewTaskController {
+public class AddNewTaskControllerImpl implements AddNewTaskController {
     private AddNewTaskView addNewTaskView;
 
     /**

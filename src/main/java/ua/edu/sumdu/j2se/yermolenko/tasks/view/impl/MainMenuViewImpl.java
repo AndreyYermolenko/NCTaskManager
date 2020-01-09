@@ -20,11 +20,11 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class MainMenuImplView implements MainMenuView {
+public class MainMenuViewImpl implements MainMenuView {
     private ViewTasksView viewTasks;
     private AddNewTaskView addDeleteTasks;
     private ChangeDeleteTaskView changeDeleteTasks;
-    private final static Logger logger = LogManager.getLogger(MainMenuImplView.class);
+    private final static Logger logger = LogManager.getLogger(MainMenuViewImpl.class);
 
 
     /**
@@ -90,7 +90,7 @@ public class MainMenuImplView implements MainMenuView {
             } catch (IllegalArgumentException e) {
                 printErr("WARNING: Сделайте правильный ввод!");
             } catch (IOException e) {
-                logger.error(e);
+                logger.error("The problem in the main menu", e);
             }
         }
     }

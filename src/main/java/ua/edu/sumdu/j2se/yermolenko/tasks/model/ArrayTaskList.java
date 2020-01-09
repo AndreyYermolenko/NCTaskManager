@@ -135,7 +135,7 @@ public class ArrayTaskList extends AbstractTaskList {
             list = (ArrayTaskList) super.clone();
             list.arrayTask = arrayTask.clone();
         } catch (CloneNotSupportedException e) {
-            logger.error(e);        }
+            logger.error("Problem cloning an ArrayTaskList", e);        }
         int index = 0;
         while (index < list.size) {
             list.arrayTask[index] = list.arrayTask[index].clone();

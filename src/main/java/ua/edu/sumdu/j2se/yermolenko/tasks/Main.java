@@ -4,19 +4,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.edu.sumdu.j2se.yermolenko.tasks.controller.CheckTasksThread;
 import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.*;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.AllTasksImplController;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.CalendarForTodayImplController;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.CalendarForWeekImplController;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.NextFiveTasksImplController;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.AllTasksControllerImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.CalendarForTodayControllerImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.CalendarForWeekControllerImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.NextFiveTasksControllerImpl;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.ArrayTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.*;
-import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.ChangeActivityImplView;
-import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.ChangeNameImplView;
-import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.ChangeTimeImplView;
-import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.DeleteTaskImplView;
-import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.MainMenuImplView;
+import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.ChangeActivityViewImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.ChangeNameViewImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.ChangeTimeViewImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.DeleteTaskViewImpl;
+import ua.edu.sumdu.j2se.yermolenko.tasks.view.impl.MainMenuViewImpl;
 
 import java.io.*;
 import java.util.HashSet;
@@ -30,7 +30,7 @@ public class Main {
 
     public static void main(String[] args) {
         AbstractTaskList list = new ArrayTaskList();
-        MainMenuImplView mainMenu = new MainMenuImplView();
+        MainMenuViewImpl mainMenu = new MainMenuViewImpl();
 
         initViewsAndControllers(mainMenu);
 
@@ -47,7 +47,7 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             mainMenu.doWork(reader, list);
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("BufferedReader problem", e);
         }
 
         serialization(list);
@@ -58,69 +58,69 @@ public class Main {
      *
      * @param mainMenu of type MainMenuImplView
      */
-    public static void initViewsAndControllers(MainMenuImplView mainMenu) {
-        NextFiveTasksImplController nextFiveTasksController = new NextFiveTasksImplController();
-        NextFiveTasksImplView nextFiveTasksView = new NextFiveTasksImplView();
-        nextFiveTasksController.setNextFiveTasksView(nextFiveTasksView);
-        nextFiveTasksView.setNextFiveTasksController(nextFiveTasksController);
+    public static void initViewsAndControllers(MainMenuViewImpl mainMenu) {
+        NextFiveTasksControllerImpl nextFiveTasksControllerImpl = new NextFiveTasksControllerImpl();
+        NextFiveTasksViewImpl nextFiveTasksViewImpl = new NextFiveTasksViewImpl();
+        nextFiveTasksControllerImpl.setNextFiveTasksView(nextFiveTasksViewImpl);
+        nextFiveTasksViewImpl.setNextFiveTasksController(nextFiveTasksControllerImpl);
 
-        CalendarForTodayImplController calendarForTodayImplController = new CalendarForTodayImplController();
-        CalendarForTodayImplView calendarForTodayImplView = new CalendarForTodayImplView();
-        calendarForTodayImplController.setCalendarForTodayView(calendarForTodayImplView);
-        calendarForTodayImplView.setCalendarForTodayController(calendarForTodayImplController);
+        CalendarForTodayControllerImpl calendarForTodayControllerImpl = new CalendarForTodayControllerImpl();
+        CalendarForTodayViewImpl calendarForTodayViewImpl = new CalendarForTodayViewImpl();
+        calendarForTodayControllerImpl.setCalendarForTodayView(calendarForTodayViewImpl);
+        calendarForTodayViewImpl.setCalendarForTodayController(calendarForTodayControllerImpl);
 
-        CalendarForWeekImplController calendarForWeekImplController = new CalendarForWeekImplController();
-        CalendarForWeekImplView calendarForWeekImplView = new CalendarForWeekImplView();
-        calendarForWeekImplController.setCalendarForWeekView(calendarForWeekImplView);
-        calendarForWeekImplView.setCalendarForWeekController(calendarForWeekImplController);
+        CalendarForWeekControllerImpl calendarForWeekControllerImpl = new CalendarForWeekControllerImpl();
+        CalendarForWeekViewImpl calendarForWeekViewImpl = new CalendarForWeekViewImpl();
+        calendarForWeekControllerImpl.setCalendarForWeekView(calendarForWeekViewImpl);
+        calendarForWeekViewImpl.setCalendarForWeekController(calendarForWeekControllerImpl);
 
-        AllTasksImplController allTasksImplController = new AllTasksImplController();
-        AllTasksImplView allTasksImplView = new AllTasksImplView();
-        allTasksImplController.setAllTasksView(allTasksImplView);
-        allTasksImplView.setAllTasksImplController(allTasksImplController);
+        AllTasksControllerImpl allTasksControllerImpl = new AllTasksControllerImpl();
+        AllTasksViewImpl allTasksViewImpl = new AllTasksViewImpl();
+        allTasksControllerImpl.setAllTasksView(allTasksViewImpl);
+        allTasksViewImpl.setAllTasksControllerImpl(allTasksControllerImpl);
 
-        ViewTasksImplView viewTasksImplView = new ViewTasksImplView();
-        viewTasksImplView.setNextFiveTasksView(nextFiveTasksView);
-        viewTasksImplView.setCalendarForTodayView(calendarForTodayImplView);
-        viewTasksImplView.setCalendarForWeekView(calendarForWeekImplView);
-        viewTasksImplView.setAllTasksView(allTasksImplView);
-
-
-        AddNewTaskImplController addNewTaskImplController = new AddNewTaskImplController();
-        AddNewTaskImplView addNewTaskImplView = new AddNewTaskImplView();
-        addNewTaskImplController.setAddNewTaskView(addNewTaskImplView);
-        addNewTaskImplView.setAddNewTaskController(addNewTaskImplController);
+        ViewTasksViewImpl viewTasksViewImpl = new ViewTasksViewImpl();
+        viewTasksViewImpl.setNextFiveTasksView(nextFiveTasksViewImpl);
+        viewTasksViewImpl.setCalendarForTodayView(calendarForTodayViewImpl);
+        viewTasksViewImpl.setCalendarForWeekView(calendarForWeekViewImpl);
+        viewTasksViewImpl.setAllTasksView(allTasksViewImpl);
 
 
-        ChangeNameImplController changeNameImplController = new ChangeNameImplController();
-        ChangeNameImplView changeNameImplView = new ChangeNameImplView();
-        changeNameImplController.setChangeNameView(changeNameImplView);
-        changeNameImplView.setChangeNameImplController(changeNameImplController);
+        AddNewTaskControllerImpl addNewTaskControllerImpl = new AddNewTaskControllerImpl();
+        AddNewTaskViewImpl addNewTaskViewImpl = new AddNewTaskViewImpl();
+        addNewTaskControllerImpl.setAddNewTaskView(addNewTaskViewImpl);
+        addNewTaskViewImpl.setAddNewTaskController(addNewTaskControllerImpl);
 
-        ChangeActivityImplController changeActivityImplController = new ChangeActivityImplController();
-        ChangeActivityImplView changeActivityImplView = new ChangeActivityImplView();
-        changeActivityImplController.setChangeActivityView(changeActivityImplView);
-        changeActivityImplView.setChangeActivityController(changeActivityImplController);
 
-        ChangeTimeImplController changeTimeImplController = new ChangeTimeImplController();
-        ChangeTimeImplView changeTimeImplView = new ChangeTimeImplView();
-        changeTimeImplController.setChangeTimeView(changeTimeImplView);
-        changeTimeImplView.setChangeTimeImplController(changeTimeImplController);
+        ChangeNameControllerImpl changeNameControllerImpl = new ChangeNameControllerImpl();
+        ChangeNameViewImpl changeNameViewImpl = new ChangeNameViewImpl();
+        changeNameControllerImpl.setChangeNameView(changeNameViewImpl);
+        changeNameViewImpl.setChangeNameControllerImpl(changeNameControllerImpl);
 
-        DeleteTaskImplController deleteTaskImplController = new DeleteTaskImplController();
-        DeleteTaskImplView deleteTaskImplView = new DeleteTaskImplView();
-        deleteTaskImplController.setDeleteTaskView(deleteTaskImplView);
-        deleteTaskImplView.setDeleteTaskImplController(deleteTaskImplController);
+        ChangeActivityControllerImpl changeActivityControllerImpl = new ChangeActivityControllerImpl();
+        ChangeActivityViewImpl changeActivityViewImpl = new ChangeActivityViewImpl();
+        changeActivityControllerImpl.setChangeActivityView(changeActivityViewImpl);
+        changeActivityViewImpl.setChangeActivityController(changeActivityControllerImpl);
 
-        ChangeDeleteTaskImplView changeDeleteTaskImplView = new ChangeDeleteTaskImplView();
-        changeDeleteTaskImplView.setChangeNameView(changeNameImplView);
-        changeDeleteTaskImplView.setChangeActivityView(changeActivityImplView);
-        changeDeleteTaskImplView.setChangeTimeView(changeTimeImplView);
-        changeDeleteTaskImplView.setDeleteTaskView(deleteTaskImplView);
+        ChangeTimeControllerImpl changeTimeControllerImpl = new ChangeTimeControllerImpl();
+        ChangeTimeViewImpl changeTimeViewImpl = new ChangeTimeViewImpl();
+        changeTimeControllerImpl.setChangeTimeView(changeTimeViewImpl);
+        changeTimeViewImpl.setChangeTimeControllerImpl(changeTimeControllerImpl);
 
-        mainMenu.setViewTasks(viewTasksImplView);
-        mainMenu.setAddDeleteTasks(addNewTaskImplView);
-        mainMenu.setChangeDeleteTasks(changeDeleteTaskImplView);
+        DeleteTaskControllerImpl deleteTaskControllerImpl = new DeleteTaskControllerImpl();
+        DeleteTaskViewImpl deleteTaskViewImpl = new DeleteTaskViewImpl();
+        deleteTaskControllerImpl.setDeleteTaskView(deleteTaskViewImpl);
+        deleteTaskViewImpl.setDeleteTaskControllerImpl(deleteTaskControllerImpl);
+
+        ChangeDeleteTaskViewImpl changeDeleteTaskViewImpl = new ChangeDeleteTaskViewImpl();
+        changeDeleteTaskViewImpl.setChangeNameView(changeNameViewImpl);
+        changeDeleteTaskViewImpl.setChangeActivityView(changeActivityViewImpl);
+        changeDeleteTaskViewImpl.setChangeTimeView(changeTimeViewImpl);
+        changeDeleteTaskViewImpl.setDeleteTaskView(deleteTaskViewImpl);
+
+        mainMenu.setViewTasks(viewTasksViewImpl);
+        mainMenu.setAddDeleteTasks(addNewTaskViewImpl);
+        mainMenu.setChangeDeleteTasks(changeDeleteTaskViewImpl);
     }
 
 }

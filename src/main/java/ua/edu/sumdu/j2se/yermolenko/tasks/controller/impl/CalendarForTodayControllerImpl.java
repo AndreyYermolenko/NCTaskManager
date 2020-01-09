@@ -17,7 +17,7 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.calendar;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class CalendarForTodayImplController implements CalendarForTodayController {
+public class CalendarForTodayControllerImpl implements CalendarForTodayController {
     private CalendarForTodayView calendarForTodayView;
 
     /**

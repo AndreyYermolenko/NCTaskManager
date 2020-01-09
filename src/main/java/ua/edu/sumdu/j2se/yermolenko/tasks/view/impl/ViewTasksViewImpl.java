@@ -17,12 +17,12 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printErr;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ViewTasksImplView implements ViewTasksView {
+public class ViewTasksViewImpl implements ViewTasksView {
     private NextFiveTasksView nextFiveTasksView;
     private CalendarForTodayView calendarForTodayView;
     private CalendarForWeekView calendarForWeekView;
     private AllTasksView allTasksView;
-    private final static Logger logger = LogManager.getLogger(ViewTasksImplView.class);
+    private final static Logger logger = LogManager.getLogger(ViewTasksViewImpl.class);
 
 
     /**
@@ -97,7 +97,7 @@ public class ViewTasksImplView implements ViewTasksView {
         } catch (IllegalArgumentException e) {
             printErr("WARNING: Сделайте правильный ввод!");
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("Problem display tasks", e);
         }
     }
 

@@ -190,9 +190,9 @@ public class LinkedTaskList extends AbstractTaskList {
     public LinkedTaskList clone() {
         LinkedTaskList list = null;
         try {
-            list = (LinkedTaskList) super.clone();  //создание объекта с помощью .clone() быстрее, чем с помощью new
+            list = (LinkedTaskList) super.clone();
         } catch (CloneNotSupportedException e) {
-            logger.error(e);        }
+            logger.error("Problem cloning a LinkedTaskList", e);        }
         list.first = list.last = null;
         list.size = 0;
         Iterator<Task> iterator = this.iterator();

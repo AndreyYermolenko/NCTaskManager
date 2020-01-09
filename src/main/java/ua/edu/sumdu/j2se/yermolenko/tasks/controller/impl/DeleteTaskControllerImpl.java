@@ -11,7 +11,7 @@ import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.DeleteTaskView;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class DeleteTaskImplController implements DeleteTaskController {
+public class DeleteTaskControllerImpl implements DeleteTaskController {
     private DeleteTaskView deleteTaskView;
 
     /**

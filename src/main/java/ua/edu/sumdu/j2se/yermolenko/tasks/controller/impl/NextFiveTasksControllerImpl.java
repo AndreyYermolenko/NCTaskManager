@@ -12,7 +12,7 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.model.Tasks.getNextFiveTasks;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class NextFiveTasksImplController implements NextFiveTasksController {
+public class NextFiveTasksControllerImpl implements NextFiveTasksController {
     private NextFiveTasksView nextFiveTasksView;
 
     /**

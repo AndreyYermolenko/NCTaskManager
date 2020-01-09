@@ -23,13 +23,13 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.validateNum
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeDeleteTaskImplView implements ChangeDeleteTaskView {
+public class ChangeDeleteTaskViewImpl implements ChangeDeleteTaskView {
     private TaskExist taskExist = new TaskExist();
     private ChangeNameView changeNameView;
     private ChangeActivityView changeActivityView;
     private ChangeTimeView changeTimeView;
     private DeleteTaskView deleteTaskView;
-    private final static Logger logger = LogManager.getLogger(ChangeDeleteTaskImplView.class);
+    private final static Logger logger = LogManager.getLogger(ChangeDeleteTaskViewImpl.class);
 
 
     /**
@@ -120,7 +120,7 @@ public class ChangeDeleteTaskImplView implements ChangeDeleteTaskView {
             } catch (IllegalArgumentException | DateTimeParseException e) {
                 printErr("WARNING: Сделайте правильный ввод!");
             } catch (IOException e) {
-                logger.error(e);
+                logger.error("Problem deleting/changing a task", e);
             }
         }
     }

@@ -378,7 +378,7 @@ public class Task implements Cloneable, Serializable, Comparable<Task> {
         try {
             return (Task) super.clone();
         } catch (CloneNotSupportedException e) {
-            logger.error(e);
+            logger.error("Problem cloning a Task object", e);
         }
         return null;
     }

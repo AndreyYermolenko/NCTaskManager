@@ -2,7 +2,7 @@ package ua.edu.sumdu.j2se.yermolenko.tasks.view.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.AllTasksImplController;
+import ua.edu.sumdu.j2se.yermolenko.tasks.controller.impl.AllTasksControllerImpl;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.yermolenko.tasks.model.Task;
 import ua.edu.sumdu.j2se.yermolenko.tasks.view.interfaces.AllTasksView;
@@ -19,21 +19,21 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.Print.printText;
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class AllTasksImplView implements AllTasksView {
+public class AllTasksViewImpl implements AllTasksView {
     private BufferedReader reader;
-    private AllTasksImplController allTasksImplController;
-    private final static Logger logger = LogManager.getLogger(AllTasksImplView.class);
+    private AllTasksControllerImpl allTasksControllerImpl;
+    private final static Logger logger = LogManager.getLogger(AllTasksViewImpl.class);
 
     /**
      * Method setAllTasksImplController sets the allTasksImplController of this AllTasksImplView object.
      *
      *
      *
-     * @param allTasksImplController the allTasksImplController of this AllTasksImplView object.
+     * @param allTasksControllerImpl the allTasksImplController of this AllTasksImplView object.
      *
      */
-    public void setAllTasksImplController(AllTasksImplController allTasksImplController) {
-        this.allTasksImplController = allTasksImplController;
+    public void setAllTasksControllerImpl(AllTasksControllerImpl allTasksControllerImpl) {
+        this.allTasksControllerImpl = allTasksControllerImpl;
     }
 
     /**
@@ -45,7 +45,7 @@ public class AllTasksImplView implements AllTasksView {
     @Override
     public void doWork(BufferedReader reader, AbstractTaskList list) {
         this.reader = reader;
-        allTasksImplController.doWork(list);
+        allTasksControllerImpl.doWork(list);
     }
 
     /**
@@ -70,6 +70,6 @@ public class AllTasksImplView implements AllTasksView {
         try {
             reader.readLine();
         } catch (IOException e) {
-            logger.error(e);        }
+            logger.error("Problem display all tasks", e);        }
     }
 }

@@ -19,9 +19,9 @@ import static ua.edu.sumdu.j2se.yermolenko.tasks.view.ServiceMethods.parseBoolea
  * @author AndreyYermolenko
  * Created on 03.01.2020
  */
-public class ChangeActivityImplView implements ChangeActivityView {
+public class ChangeActivityViewImpl implements ChangeActivityView {
     private ChangeActivityController changeActivityController;
-    private final static Logger logger = LogManager.getLogger(ChangeActivityImplView.class);
+    private final static Logger logger = LogManager.getLogger(ChangeActivityViewImpl.class);
 
 
     /**
@@ -51,7 +51,7 @@ public class ChangeActivityImplView implements ChangeActivityView {
             boolean activity = parseBoolean(reader.readLine());
             changeActivityController.doWork(task, activity);
         } catch (IOException e) {
-            logger.error(e);
+            logger.error("Activity change problem", e);
         }
 
     }
