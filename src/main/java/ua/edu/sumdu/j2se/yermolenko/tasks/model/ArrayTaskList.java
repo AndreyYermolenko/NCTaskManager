@@ -60,7 +60,7 @@ public class ArrayTaskList extends AbstractTaskList {
      * The method deletes the task and returns true
      * if the deletion is successful.
      * @param task of type Task.
-     * @return
+     * @return true or false
      */
     public boolean remove(Task task) {
         for (int i = 0; i < arrayTask.length; i++) {
@@ -85,7 +85,7 @@ public class ArrayTaskList extends AbstractTaskList {
 
     /**
      * The method returns the size of the list.
-     * @return
+     * @return size of type int
      */
     public int size() {
         return size;
@@ -94,7 +94,7 @@ public class ArrayTaskList extends AbstractTaskList {
     /**
      * The method returns the task with the specified index.
      * @param index
-     * @return
+     * @return Task
      */
     public Task getTask(int index) {
         if (index >= size && index < 0) {

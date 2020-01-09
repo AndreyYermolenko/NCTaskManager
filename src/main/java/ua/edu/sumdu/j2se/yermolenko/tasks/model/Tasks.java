@@ -19,7 +19,7 @@ public class Tasks {
      * @param tasks of type Iterable<Task>
      * @param start of type LocalDateTime
      * @param end of type LocalDateTime
-     * @return Iterable<Task>
+     * @return Iterable
      */
     public static Iterable<Task> incoming(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) {
         AbstractTaskList filterList = TaskListFactory.createTaskList(tasks);
@@ -38,7 +38,7 @@ public class Tasks {
      * @param tasks of type Iterable<Task>
      * @param start of type LocalDateTime
      * @param end of type LocalDateTime
-     * @return SortedMap<LocalDateTime, Set<Task>>
+     * @return SortedMap
      */
     public static SortedMap<LocalDateTime, Set<Task>> calendar(Iterable<Task> tasks, LocalDateTime start, LocalDateTime end) {
         SortedMap<LocalDateTime, Set<Task>> map = new TreeMap<LocalDateTime, Set<Task>>();

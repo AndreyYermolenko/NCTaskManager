@@ -10,8 +10,8 @@ public class TaskListFactory {
     /**
      * The method returns a new instance of the collection
      * of the same type as the input parameter.
-     * @param o of type Iterable<Task>.
-     * @return
+     * @param o of type Iterable.
+     * @return AbstractTaskList
      */
     public static AbstractTaskList createTaskList(Iterable<Task> o) {
         if (o instanceof ArrayTaskList) {
